@@ -1,0 +1,25 @@
+{
+  "name": "Min's Note 5.8",
+  "short_name": "Min's Note",
+  "description": "메모, 차계부, 여행, 골프를 한 곳에서 관리하는 개인 노트 앱",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f7f6",
+  "theme_color": "#151515",
+  "lang": "ko-KR",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
