@@ -118,7 +118,7 @@ body{background:var(--bg);color:var(--ink)}
 .golf-hit small{display:block;font-size:12px;font-weight:450;color:#9298a2;margin-top:5px}
 .golf-penalties{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:9px}
 .golf-penalties button,.golf-undo{border:1px solid #343941;background:#0d0f12;color:#f2f3f5;border-radius:12px;padding:11px 5px;font-size:12px}
-.golf-penalties button.onion-on{background:#f2f3f5;color:#090a0c}
+
 .golf-undo{width:100%;margin-top:8px}
 .golf-save{width:100%;border:0;border-radius:14px;padding:14px;background:#f2f3f5;color:#090a0c;font-size:14px;font-weight:650}
 .golf-history{display:flex;flex-direction:column;gap:10px}
@@ -481,10 +481,19 @@ header.top .app-version{color:#bdbdbd!important}
 .photo-viewer img{display:block;max-width:100%;width:auto;height:auto;max-height:none;object-fit:contain;margin:auto;background:transparent}
 .photo-viewer-close{position:fixed;right:14px;top:12px;z-index:3001;width:38px;height:38px;border-radius:50%!important;background:rgba(255,255,255,.12)!important;color:#fff!important;border:1px solid rgba(255,255,255,.35)!important;font-size:27px!important;line-height:34px!important;padding:0!important}
 body.photo-viewer-open{overflow:hidden!important}
-</style>
+/* Min 6.5 — Reading list/detail/edit */
+.book-list-item{background:#fff;border:1px solid #d7d7d4;border-radius:14px;padding:15px 16px;cursor:pointer;margin:0 0 10px}.book-list-item:last-child{margin-bottom:0}
+#bookRecords .book-list-title{font-size:16px;font-weight:650;color:#151515}
+.book-detail-sheet{max-height:min(82vh,760px)!important;display:flex!important;flex-direction:column}
+.book-detail-scroll{overflow-y:auto;padding-right:2px}
+.book-detail-image{display:none;width:100%;max-height:48vh;object-fit:contain;background:#f3f3f1;border:1px solid #dededb;border-radius:12px;margin-bottom:16px;cursor:zoom-in}
+.book-detail-author{font-size:13px;color:#737373;margin-bottom:14px}
+.book-detail-content{white-space:pre-wrap;word-break:break-word;line-height:1.65;color:#151515}
+.book-detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid #dededb}
+#bookForm.editing .save{font-weight:700}
+#travelDetailModal{z-index:80}#travelDetailModal .sheet{position:relative;z-index:81}</style>
 <meta name="theme-color" content="#090a0c">
-
-<!-- Min 6.4 PWA support -->
+<!-- Min 7.6 PWA support -->
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -521,6 +530,21 @@ body.photo-viewer-open{overflow:hidden!important}
   <section id="bookRecords" class="records"><div class="empty">아직 저장된 독서 기록이 없습니다.</div></section>
 </section>
 
+<div class="modal" id="carDetailModal"><div class="sheet"><div class="sheet-head"><h3 id="carDetailTitle">차량 기록</h3><button class="close" id="carDetailClose" type="button">×</button></div><div class="book-detail-scroll"><img id="carDetailImage" class="book-detail-image" alt="차량 사진"><div id="carDetailText" class="book-detail-content"></div></div><div class="book-detail-actions"><button id="carDetailEdit" type="button">수정</button><button id="carDetailDelete" class="delete" type="button">삭제</button></div></div></div>
+<div class="modal" id="travelDetailModal"><div class="sheet"><div class="sheet-head"><h3>여행 기록</h3><button class="close" id="travelDetailClose" type="button">×</button></div><div class="book-detail-scroll"><img id="travelDetailImage" class="book-detail-image" alt="여행 사진"><div id="travelDetailPeriod" class="book-detail-author"></div><div id="travelDetailContent" class="book-detail-content"></div></div><div class="book-detail-actions"><button id="travelDetailEdit" type="button">수정</button><button id="travelDetailDelete" class="delete" type="button">삭제</button></div></div></div>
+<div class="modal" id="golfDetailModal"><div class="sheet"><div class="sheet-head"><h3 id="golfDetailTitle">골프 기록</h3><button class="close" id="golfDetailClose" type="button">×</button></div><div id="golfDetailContent" class="book-detail-content"></div><div class="book-detail-actions"><button id="golfDetailEdit" type="button">수정</button><button id="golfDetailDelete" class="delete" type="button">삭제</button></div></div></div>
+<div class="modal" id="bookDetailModal">
+  <div class="sheet book-detail-sheet">
+    <div class="sheet-head"><h3 id="bookDetailTitle"></h3><button class="close" id="bookDetailClose" type="button">×</button></div>
+    <div class="book-detail-scroll">
+      <img id="bookDetailImage" class="book-detail-image" alt="책 사진">
+      <div id="bookDetailAuthor" class="book-detail-author"></div>
+      <div id="bookDetailContent" class="book-detail-content"></div>
+    </div>
+    <div class="book-detail-actions"><button id="bookDetailEdit" type="button">수정</button><button id="bookDetailDelete" class="delete" type="button">삭제</button></div>
+  </div>
+</div>
+
 <section id="golfView" class="view">
   <div class="feature-head"><button class="back-home" type="button">← 홈</button><div class="feature-title">골프</div></div>
   <section class="panel golf-setup">
@@ -543,9 +567,9 @@ body.photo-viewer-open{overflow:hidden!important}
       </div>
       <input id="golfParCustom" class="input golf-par-custom" type="number" min="1" max="9" inputmode="numeric" placeholder="PAR 직접 입력">
     </div>
-    <button id="golfHit" class="golf-hit" type="button">+1타<small>한 타 칠 때마다 탭</small></button>
-    <div class="golf-penalties"><button id="golfOB" type="button">OB +2</button><button id="golfHazard" type="button">해저드 +1</button><button id="golfOnion" type="button">양파</button></div>
-    <button id="golfUndo" class="golf-undo" type="button">↶ 되돌리기</button>
+    <button id="golfHit" class="golf-hit" type="button">+1</button>
+    <div class="golf-penalties"><button id="golfMinus" type="button">-1</button><button id="golfOB" type="button">OB +2</button><button id="golfHazard" type="button">해저드 +1</button></div>
+    
   </section>
   <button id="golfSave" class="golf-save" type="button">라운드 저장</button>
   <div class="section-title" style="margin-top:22px"><h2>기록</h2><span class="count" id="golfCount">0건</span></div>
@@ -560,9 +584,9 @@ body.photo-viewer-open{overflow:hidden!important}
 <img id="photoViewerImage" alt="전체 사진">
 </div>
 <div class="modal" id="memoModal"><div class="sheet"><div class="sheet-head"><h3 id="memoFormTitle">메모 추가</h3><button class="close" id="memoClose" type="button">×</button></div><form id="memoForm"><div class="field"><label class="label" for="memoTitle">제목</label><input class="input" id="memoTitle" maxlength="120" placeholder="제목을 입력하세요." required></div><div class="field"><label class="label" for="memoContent">내용</label><textarea class="textarea" id="memoContent" maxlength="5000" placeholder="내용을 입력하세요." autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" data-form-type="other"></textarea></div><button class="save" id="memoSave" type="submit">저장</button><button class="cancel" id="memoCancel" type="button" style="display:none">수정 취소</button></form></div></div>
-<div class="modal" id="detailModal"><div class="sheet"><div class="sheet-head"><h3 id="detailTitle"></h3><button class="close" id="detailClose">×</button></div><div class="detail-text" id="detailText"></div></div></div>
+<div class="modal" id="detailModal"><div class="sheet"><div class="sheet-head"><h3 id="detailTitle"></h3><button class="close" id="detailClose">×</button></div><div class="detail-text" id="detailText"></div><div class="book-detail-actions"><button id="detailImportant" type="button">중요</button><button id="detailEdit" type="button">수정</button><button id="detailDelete" class="delete" type="button">삭제</button></div></div></div>
 
-<div class="modal" id="travelModal"><div class="sheet"><div class="sheet-head"><div><h3 id="travelTitle">여행 기록</h3><div class="travel-region-name" id="travelRegion"></div></div><button class="close" id="travelClose" type="button">×</button></div><div id="tripList" class="trip-list"></div><form id="travelForm"><div class="field"><span class="label">사진</span><label class="photo-box"><img id="travelPreview"><span class="photo-label" id="travelPhotoText">사진 등록<small>갤러리에서 사진 선택</small></span><input id="travelPhoto" type="file" accept="image/*"></label></div><div class="field"><span class="label">기간</span><div class="period-row"><input class="input" id="travelStart" type="date" required><input class="input" id="travelEnd" type="date" required></div></div><div class="field"><label class="label" for="travelContent">내용</label><textarea class="textarea" id="travelContent" maxlength="3000" placeholder="여행 기록을 입력하세요."></textarea></div><button class="save" type="submit">여행 기록 저장</button></form></div></div>
+<div class="modal" id="travelModal"><div class="sheet"><div class="sheet-head"><div><h3 id="travelTitle">여행 기록</h3><div class="travel-region-name" id="travelRegion"></div></div><button class="close" id="travelClose" type="button">×</button></div><form id="travelForm"><div class="field"><span class="label">사진</span><label class="photo-box"><img id="travelPreview"><span class="photo-label" id="travelPhotoText">사진 등록<small>갤러리에서 사진 선택</small></span><input id="travelPhoto" type="file" accept="image/*"></label></div><div class="field"><span class="label">기간</span><div class="period-row"><input class="input" id="travelStart" type="date" required><input class="input" id="travelEnd" type="date" required></div></div><div class="field"><label class="label" for="travelContent">내용</label><textarea class="textarea" id="travelContent" maxlength="3000" placeholder="여행 기록을 입력하세요."></textarea></div><button class="save" type="submit">여행 기록 저장</button></form><div class="section-title" style="margin-top:22px"><h2>기록</h2></div><div id="tripList" class="trip-list"></div></div></div>
 <script>
 const $=s=>document.querySelector(s);let db,selectedPhoto=null,selectedBookPhoto=null,editingMemoId=null,selectedTravelPhoto=null,currentRegion=null;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1600)}function digits(v){return String(v||'').replace(/\D/g,'')}function comma(v){const n=digits(v);return n?Number(n).toLocaleString('ko-KR'):''}function bindMoney(el,suffix){el.addEventListener('focus',()=>{el.value=digits(el.value)});el.addEventListener('input',()=>{el.value=comma(el.value)});el.addEventListener('blur',()=>{const n=comma(el.value);el.value=n?n+' '+suffix:''})}bindMoney($('#amount'),'원');bindMoney($('#mileage'),'km');function todayLocal(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}$('#today').onclick=()=>$('#date').value=todayLocal();function displayDate(s){if(!s)return '';const[y,m,d]=s.split('-');return `${y}.${m}.${d}`}
 function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));window.scrollTo({top:0,behavior:'instant'});if(id==='travelView')initTravelMap()}document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>showView(b.dataset.open));document.querySelectorAll('.back-home').forEach(b=>b.onclick=()=>showView('homeView'));
@@ -570,20 +594,83 @@ function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('MinDB',
 function storeAdd(name,obj){return new Promise((res,rej)=>{const r=db.transaction(name,'readwrite').objectStore(name).add(obj);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}function storePut(name,obj){return new Promise((res,rej)=>{const r=db.transaction(name,'readwrite').objectStore(name).put(obj);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}function storeAll(name){return new Promise((res,rej)=>{const r=db.transaction(name).objectStore(name).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}function storeDelete(name,id){return new Promise((res,rej)=>{const r=db.transaction(name,'readwrite').objectStore(name).delete(id);r.onsuccess=res;r.onerror=()=>rej(r.error)})}
 function resizeImage(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);img.onload=()=>{const MAX=1800,scale=Math.min(1,MAX/Math.max(img.width,img.height)),W=Math.max(1,Math.round(img.width*scale)),H=Math.max(1,Math.round(img.height*scale)),c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.drawImage(img,0,0,W,H);URL.revokeObjectURL(u);c.toBlob(b=>b?res(b):rej(),'image/jpeg',.86)};img.onerror=()=>{URL.revokeObjectURL(u);rej()};img.src=u})}$('#photo').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{selectedPhoto=await resizeImage(f);$('#preview').src=URL.createObjectURL(selectedPhoto);$('#preview').style.display='block';$('#photoText').style.display='none'}catch{toast('사진을 불러오지 못했습니다.')}};
 function addCarContentRow(value=''){const list=$('#carContentList'),row=document.createElement('div');row.className='car-content-row';row.innerHTML='<input class="input car-content-input" maxlength="80" placeholder="추가 내용"><button class="content-remove" type="button" aria-label="내용 삭제">×</button>';row.querySelector('input').value=value;row.querySelector('.content-remove').onclick=()=>{row.remove();if(!list.querySelector('.car-content-row'))addCarContentRow()};list.appendChild(row);row.querySelector('input').focus()}function resetCarContentRows(){const list=$('#carContentList');list.innerHTML='<div class="car-content-row"><input class="input car-content-input" maxlength="80" placeholder="예: 엔진오일 교환" required><button class="content-remove" type="button" aria-label="내용 삭제">×</button></div>';list.querySelector('.content-remove').onclick=()=>{}}$('#contentAdd').onclick=()=>addCarContentRow();$('#carContentList').querySelector('.content-remove').onclick=()=>{};
-async function renderCar(){const arr=(await storeAll('carlog')).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);$('#count').textContent=arr.length+'건';const box=$('#records');box.innerHTML='';if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 기록이 없습니다.</div>';return}arr.forEach(r=>{const card=document.createElement('article');card.className='record';if(r.photo){const im=document.createElement('img');im.className='record-img';im.src=URL.createObjectURL(r.photo);card.appendChild(im)}const body=document.createElement('div');body.className='record-body';body.innerHTML=`<div class="record-top"><div class="record-title"></div><div class="record-date">${displayDate(r.date)}</div></div><div class="place"></div><div class="meta"><span class="money">${r.amount?Number(r.amount).toLocaleString('ko-KR')+'원':'-'}</span><span class="km">${r.mileage?Number(r.mileage).toLocaleString('ko-KR')+' km':'-'}</span></div><div class="actions"><button class="badge delete">삭제</button></div>`;body.querySelector('.record-title').textContent=r.content;body.querySelector('.place').textContent=r.place||'장소 미입력';body.querySelector('.delete').onclick=async()=>{if(confirm('이 기록을 삭제하시겠습니까?')){await storeDelete('carlog',r.id);renderCar();toast('삭제했습니다.')}};card.appendChild(body);box.appendChild(card)})}
-$('#carForm').onsubmit=async e=>{e.preventDefault();const contents=[...document.querySelectorAll('.car-content-input')].map(x=>x.value.trim()).filter(Boolean),content=contents.join('\n'),date=$('#date').value;if(!content||!date){toast('내용과 날짜를 입력해주세요.');return}await storeAdd('carlog',{photo:selectedPhoto,content,place:$('#place').value.trim(),amount:digits($('#amount').value),mileage:digits($('#mileage').value),date});e.target.reset();resetCarContentRows();selectedPhoto=null;$('#preview').removeAttribute('src');$('#preview').style.display='none';$('#photoText').style.display='block';await renderCar();toast('저장했습니다.')};
+let editingCarId=null,carDetailId=null;
+function resetCarForm(){editingCarId=null;selectedPhoto=null;$('#carForm').reset();resetCarContentRows();$('#carForm').querySelector('.save').textContent='저장';$('#preview').removeAttribute('src');$('#preview').style.display='none';$('#photoText').style.display='block'}
+async function showCarDetail(id){const r=(await storeAll('carlog')).find(x=>x.id===id);if(!r)return;carDetailId=id;$('#carDetailTitle').textContent=(r.content||'차량 기록').split('\n')[0];$('#carDetailText').textContent=`${r.content||''}\n\n장소 · ${r.place||'미입력'}\n금액 · ${r.amount?Number(r.amount).toLocaleString('ko-KR')+'원':'-'}\n주행거리 · ${r.mileage?Number(r.mileage).toLocaleString('ko-KR')+' km':'-'}\n날짜 · ${displayDate(r.date)}`;const im=$('#carDetailImage');if(r.photo){im.src=URL.createObjectURL(r.photo);im.style.display='block';im.onclick=e=>{e.stopPropagation();openPhotoViewer(im.src)}}else{im.style.display='none';im.removeAttribute('src')}$('#carDetailModal').classList.add('on')}
+function closeCarDetail(){carDetailId=null;$('#carDetailModal').classList.remove('on')}$('#carDetailClose').onclick=closeCarDetail;$('#carDetailModal').onclick=e=>{if(e.target===$('#carDetailModal'))closeCarDetail()};
+$('#carDetailEdit').onclick=async()=>{const r=(await storeAll('carlog')).find(x=>x.id===carDetailId);if(!r)return;editingCarId=r.id;selectedPhoto=r.photo||null;const vals=(r.content||'').split('\n').filter(Boolean);const list=$('#carContentList');list.innerHTML='';(vals.length?vals:['']).forEach(v=>addCarContentRow(v));$('#place').value=r.place||'';$('#amount').value=r.amount?Number(r.amount).toLocaleString('ko-KR')+' 원':'';$('#mileage').value=r.mileage?Number(r.mileage).toLocaleString('ko-KR')+' km':'';$('#date').value=r.date||'';if(r.photo){$('#preview').src=URL.createObjectURL(r.photo);$('#preview').style.display='block';$('#photoText').style.display='none'}$('#carForm').querySelector('.save').textContent='수정 저장';closeCarDetail();window.scrollTo({top:0,behavior:'smooth'})};
+$('#carDetailDelete').onclick=async()=>{if(carDetailId&&confirm('이 기록을 삭제하시겠습니까?')){await storeDelete('carlog',carDetailId);closeCarDetail();renderCar();toast('삭제했습니다.')}};
+async function renderCar(){const arr=(await storeAll('carlog')).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);$('#count').textContent=arr.length+'건';const box=$('#records');box.innerHTML='';if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 기록이 없습니다.</div>';return}arr.forEach(r=>{const card=document.createElement('article');card.className='book-list-item';card.innerHTML='<div class="book-list-title"></div>';card.querySelector('.book-list-title').textContent=(r.content||'차량 기록').split('\n')[0];card.onclick=()=>showCarDetail(r.id);box.appendChild(card)})}
+$('#carForm').onsubmit=async e=>{e.preventDefault();const contents=[...document.querySelectorAll('.car-content-input')].map(x=>x.value.trim()).filter(Boolean),content=contents.join('\n'),date=$('#date').value;if(!content||!date){toast('내용과 날짜를 입력해주세요.');return}const obj={photo:selectedPhoto,content,place:$('#place').value.trim(),amount:digits($('#amount').value),mileage:digits($('#mileage').value),date};if(editingCarId){obj.id=editingCarId;await storePut('carlog',obj)}else await storeAdd('carlog',obj);const edited=!!editingCarId;resetCarForm();await renderCar();toast(edited?'수정했습니다.':'저장했습니다.')};
 
 $('#bookPhoto').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{selectedBookPhoto=await resizeImage(f);$('#bookPreview').src=URL.createObjectURL(selectedBookPhoto);$('#bookPreview').style.display='block';$('#bookPhotoText').style.display='none'}catch{toast('사진을 불러오지 못했습니다.')}};
-async function renderBook(){const arr=(await storeAll('book')).sort((a,b)=>b.id-a.id);$('#bookCount').textContent=arr.length+'건';const box=$('#bookRecords');box.innerHTML='';if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 독서 기록이 없습니다.</div>';return}arr.forEach(r=>{const card=document.createElement('article');card.className='record';if(r.photo){const im=document.createElement('img');im.className='record-img';im.src=URL.createObjectURL(r.photo);card.appendChild(im)}const body=document.createElement('div');body.className='record-body';body.innerHTML='<div class="record-top"><div class="record-title"></div></div><div class="place"></div><div class="memo-preview"></div><div class="actions"><button class="badge delete" type="button">삭제</button></div>';body.querySelector('.record-title').textContent=r.title||'';body.querySelector('.place').textContent=r.author?'저자 · '+r.author:'저자 미입력';body.querySelector('.memo-preview').textContent=r.content||'';body.querySelector('.delete').onclick=async()=>{if(confirm('이 독서 기록을 삭제하시겠습니까?')){await storeDelete('book',r.id);renderBook();toast('삭제했습니다.')}};card.appendChild(body);box.appendChild(card)})}
-$('#bookForm').onsubmit=async e=>{e.preventDefault();const title=$('#bookTitle').value.trim();if(!title){toast('책제목을 입력해주세요.');return}await storeAdd('book',{photo:selectedBookPhoto,title,author:$('#bookAuthor').value.trim(),content:$('#bookContent').value.trim()});e.target.reset();selectedBookPhoto=null;$('#bookPreview').removeAttribute('src');$('#bookPreview').style.display='none';$('#bookPhotoText').style.display='block';await renderBook();toast('저장했습니다.')};
+let editingBookId=null,bookDetailId=null;
+function resetBookForm(){
+ editingBookId=null;selectedBookPhoto=null;$('#bookForm').reset();$('#bookForm').classList.remove('editing');
+ $('#bookForm').querySelector('.save').textContent='저장';$('#bookPreview').removeAttribute('src');$('#bookPreview').style.display='none';$('#bookPhotoText').style.display='block';
+}
+async function showBookDetail(id){
+ const r=(await storeAll('book')).find(x=>x.id===id);if(!r)return;
+ bookDetailId=id;$('#bookDetailTitle').textContent=r.title||'';$('#bookDetailAuthor').textContent=r.author?'저자 · '+r.author:'저자 미입력';$('#bookDetailContent').textContent=r.content||'내용이 없습니다.';
+ const im=$('#bookDetailImage');if(r.photo){im.src=URL.createObjectURL(r.photo);im.style.display='block';im.onclick=e=>{e.stopPropagation();openPhotoViewer(im.src)}}else{im.removeAttribute('src');im.style.display='none'}
+ $('#bookDetailModal').classList.add('on');
+}
+function closeBookDetail(){bookDetailId=null;$('#bookDetailModal').classList.remove('on')}
+$('#bookDetailClose').onclick=closeBookDetail;$('#bookDetailModal').onclick=e=>{if(e.target===$('#bookDetailModal'))closeBookDetail()};
+$('#bookDetailEdit').onclick=async()=>{
+ const r=(await storeAll('book')).find(x=>x.id===bookDetailId);if(!r)return;
+ editingBookId=r.id;selectedBookPhoto=r.photo||null;$('#bookTitle').value=r.title||'';$('#bookAuthor').value=r.author||'';$('#bookContent').value=r.content||'';
+ if(r.photo){$('#bookPreview').src=URL.createObjectURL(r.photo);$('#bookPreview').style.display='block';$('#bookPhotoText').style.display='none'}else{$('#bookPreview').removeAttribute('src');$('#bookPreview').style.display='none';$('#bookPhotoText').style.display='block'}
+ $('#bookForm').classList.add('editing');$('#bookForm').querySelector('.save').textContent='수정 저장';closeBookDetail();$('#bookView').scrollTo?$('#bookView').scrollTo({top:0,behavior:'smooth'}):window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>$('#bookTitle').focus(),250);
+};
+$('#bookDetailDelete').onclick=async()=>{if(bookDetailId&&confirm('이 독서 기록을 삭제하시겠습니까?')){await storeDelete('book',bookDetailId);closeBookDetail();await renderBook();toast('삭제했습니다.')}};
+async function renderBook(){
+ const arr=(await storeAll('book')).sort((a,b)=>b.id-a.id);$('#bookCount').textContent=arr.length+'건';const box=$('#bookRecords');box.innerHTML='';
+ if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 독서 기록이 없습니다.</div>';return}
+ arr.forEach(r=>{const card=document.createElement('article');card.className='book-list-item';card.innerHTML='<div class="book-list-title"></div>';card.querySelector('.book-list-title').textContent=r.title||'(제목 없음)';card.onclick=()=>showBookDetail(r.id);box.appendChild(card)});
+}
+$('#bookForm').onsubmit=async e=>{
+ e.preventDefault();const title=$('#bookTitle').value.trim();if(!title){toast('책제목을 입력해주세요.');return}
+ const obj={photo:selectedBookPhoto,title,author:$('#bookAuthor').value.trim(),content:$('#bookContent').value.trim()};
+ if(editingBookId){obj.id=editingBookId;await storePut('book',obj)}else await storeAdd('book',obj);
+ const edited=!!editingBookId;resetBookForm();await renderBook();toast(edited?'수정했습니다.':'저장했습니다.');
+};
 function openMemoModal(edit=false){$('#memoFormTitle').textContent=edit?'메모 수정':'메모 추가';$('#memoSave').textContent=edit?'수정 저장':'저장';$('#memoCancel').style.display=edit?'block':'none';$('#memoModal').classList.add('on');setTimeout(()=>$('#memoTitle').focus(),80)}
 function closeMemoModal(){editingMemoId=null;$('#memoForm').reset();$('#memoModal').classList.remove('on')}
 $('#memoAdd').onclick=()=>{editingMemoId=null;$('#memoForm').reset();openMemoModal(false)};$('#memoClose').onclick=closeMemoModal;$('#memoCancel').onclick=closeMemoModal;$('#memoModal').onclick=e=>{if(e.target===$('#memoModal'))closeMemoModal()};
 function memoFields(r){return {title:r.title||r.content||'',content:(r.title?r.content:r.detail)||''}}
-function showDetail(r){const m=memoFields(r);$('#detailTitle').textContent=m.title;$('#detailText').textContent=m.content||'내용이 없습니다.';$('#detailModal').classList.add('on')}$('#detailClose').onclick=()=>$('#detailModal').classList.remove('on');$('#detailModal').onclick=e=>{if(e.target===$('#detailModal'))$('#detailModal').classList.remove('on')};
-async function renderMemo(){const all=(await storeAll('memo')).sort((a,b)=>(Number(b.important||false)-Number(a.important||false))||(b.id-a.id));const q=($('#memoSearch')?.value||'').trim().toLocaleLowerCase('ko-KR');const arr=q?all.filter(r=>{const m=memoFields(r);return (m.title+' '+m.content).toLocaleLowerCase('ko-KR').includes(q)}):all;$('#memoCount').textContent=q?arr.length+' / '+all.length+'건':all.length+'건';const box=$('#memos');box.innerHTML='';if(!arr.length){box.innerHTML=q?'<div class="empty">검색 결과가 없습니다.</div>':'<div class="empty">아직 저장된 메모가 없습니다.<br>＋를 눌러 메모를 추가하세요.</div>';return}arr.forEach(r=>{const m=memoFields(r),card=document.createElement('article');card.className='memo-card';const body=document.createElement('div');body.className='memo-body';body.innerHTML='<div class="memo-title"></div><div class="actions"><button class="badge important">중요</button><button class="badge detail">상세</button><button class="badge edit">수정</button><button class="badge delete">삭제</button></div>';body.querySelector('.memo-title').textContent=m.title;if(r.important){card.classList.add('important');body.querySelector('.important').classList.add('on')}body.querySelector('.important').onclick=async()=>{await storePut('memo',{...r,important:!r.important});await renderMemo();toast(r.important?'중요 표시를 해제했습니다.':'중요 메모로 설정했습니다.')};body.querySelector('.detail').onclick=()=>showDetail(r);body.querySelector('.edit').onclick=()=>{editingMemoId=r.id;$('#memoTitle').value=m.title;$('#memoContent').value=m.content;openMemoModal(true)};body.querySelector('.delete').onclick=async()=>{if(confirm('이 메모를 삭제하시겠습니까?')){await storeDelete('memo',r.id);renderMemo();toast('삭제했습니다.')}};card.appendChild(body);box.appendChild(card)})}
+let memoDetailId=null;
+function closeMemoDetail(){memoDetailId=null;$('#detailModal').classList.remove('on')}
+function showDetail(r){const m=memoFields(r);memoDetailId=r.id;$('#detailTitle').textContent=m.title;$('#detailText').textContent=m.content||'내용이 없습니다.';$('#detailImportant').textContent=r.important?'중요 해제':'중요';$('#detailModal').classList.add('on')}
+$('#detailClose').onclick=closeMemoDetail;$('#detailModal').onclick=e=>{if(e.target===$('#detailModal'))closeMemoDetail()};
+$('#detailEdit').onclick=async()=>{const r=(await storeAll('memo')).find(x=>x.id===memoDetailId);if(!r)return;const m=memoFields(r);editingMemoId=r.id;$('#memoTitle').value=m.title;$('#memoContent').value=m.content;closeMemoDetail();openMemoModal(true)};
+$('#detailDelete').onclick=async()=>{if(memoDetailId&&confirm('이 메모를 삭제하시겠습니까?')){await storeDelete('memo',memoDetailId);closeMemoDetail();await renderMemo();toast('삭제했습니다.')}};
+$('#detailImportant').onclick=async()=>{const r=(await storeAll('memo')).find(x=>x.id===memoDetailId);if(!r)return;await storePut('memo',{...r,important:!r.important});closeMemoDetail();await renderMemo();toast(r.important?'중요 표시를 해제했습니다.':'중요 메모로 설정했습니다.')};
+async function renderMemo(){
+ const all=(await storeAll('memo')).sort((a,b)=>(Number(b.important||false)-Number(a.important||false))||(b.id-a.id));
+ const q=($('#memoSearch')?.value||'').trim().toLocaleLowerCase('ko-KR');
+ const arr=q?all.filter(r=>{const m=memoFields(r);return (m.title+' '+m.content).toLocaleLowerCase('ko-KR').includes(q)}):all;
+ $('#memoCount').textContent=q?arr.length+' / '+all.length+'건':all.length+'건';
+ const box=$('#memos');box.innerHTML='';
+ if(!arr.length){box.innerHTML=q?'<div class="empty">검색 결과가 없습니다.</div>':'<div class="empty">저장된 메모가 없습니다.</div>';return}
+ arr.forEach(r=>{
+   const m=memoFields(r),card=document.createElement('article');
+   card.className='memo-card'+(r.important?' important':'');
+   const body=document.createElement('div');body.className='memo-body';
+   const title=document.createElement('div');title.className='memo-title';title.textContent=m.title||'(제목 없음)';
+   const actions=document.createElement('div');actions.className='actions';
+   const imp=document.createElement('button');imp.type='button';imp.className='badge important'+(r.important?' on':'');imp.textContent='중요';
+   imp.onclick=async()=>{await storePut('memo',{...r,important:!r.important});await renderMemo();toast(r.important?'중요 표시를 해제했습니다.':'중요 메모로 설정했습니다.')};
+   const detail=document.createElement('button');detail.type='button';detail.className='badge';detail.textContent='상세';detail.onclick=()=>showDetail(r);
+   const edit=document.createElement('button');edit.type='button';edit.className='badge';edit.textContent='수정';
+   edit.onclick=()=>{editingMemoId=r.id;$('#memoTitle').value=m.title;$('#memoContent').value=m.content;openMemoModal(true)};
+   const del=document.createElement('button');del.type='button';del.className='badge danger';del.textContent='삭제';
+   del.onclick=async()=>{if(confirm('이 메모를 삭제하시겠습니까?')){await storeDelete('memo',r.id);await renderMemo();toast('삭제했습니다.')}};
+   actions.append(imp,detail,edit,del);body.append(title,actions);card.append(body);box.append(card);
+ });
+}
 const memoSearch=$('#memoSearch'),memoSearchClear=$('#memoSearchClear');if(memoSearch){memoSearch.addEventListener('input',()=>{memoSearchClear.classList.toggle('show',!!memoSearch.value);renderMemo()});memoSearchClear.onclick=()=>{memoSearch.value='';memoSearchClear.classList.remove('show');renderMemo();memoSearch.focus()}}
-$('#memoForm').onsubmit=async e=>{e.preventDefault();const title=$('#memoTitle').value.trim(),content=$('#memoContent').value.trim();if(!title){toast('제목을 입력해주세요.');return}if(editingMemoId){await storePut('memo',{id:editingMemoId,title,content,date:todayLocal()});toast('수정했습니다.')}else{await storeAdd('memo',{title,content,date:todayLocal()});toast('저장했습니다.')}closeMemoModal();await renderMemo()};
+$('#memoForm').onsubmit=async e=>{e.preventDefault();const title=$('#memoTitle').value.trim(),content=$('#memoContent').value.trim();if(!title){toast('제목을 입력해주세요.');return}if(editingMemoId){const prev=(await storeAll('memo')).find(x=>x.id===editingMemoId);await storePut('memo',{id:editingMemoId,title,content,date:todayLocal(),important:!!(prev&&prev.important)});toast('수정했습니다.')}else{await storeAdd('memo',{title,content,date:todayLocal()});toast('저장했습니다.')}closeMemoModal();await renderMemo()};
 
 let mapZoom=1,mapPanX=0,mapPanY=0,mapReady=false,mapGestureBound=false;
 const METRO_WORDS=['서울','부산','대구','인천','대전','울산','세종','광주','전남광주'];
@@ -652,13 +739,105 @@ function bindDetailMapGestures(){if(mapGestureBound)return;const vp=$('#mapViewp
 }
 async function loadRealMap(){return initTravelMap()}
 async function renderTravelMap(){
- if(!db)return;const trips=await storeAll('travel'),visited=new Set(trips.map(x=>x.region));
- document.querySelectorAll('#koreaMap .detail-region').forEach(x=>x.classList.toggle('visited',visited.has(x.dataset.region)||visited.has(legacyRegionName(x.dataset.region))));
- document.querySelectorAll('#koreaMap .detail-label').forEach(x=>x.classList.toggle('visited-label',visited.has(x.dataset.region)||visited.has(legacyRegionName(x.dataset.region))));
- for(const area of Object.keys(TRAVEL_MAP_DATA)){const names=new Set(TRAVEL_MAP_DATA[area].filter(r=>visited.has(r.key)||visited.has(r.name)).map(r=>r.name));const el=document.querySelector(`[data-count="${area}"]`);if(el)el.textContent=names.size+'곳'}
+ if(!db)return;
+ const trips=await storeAll('travel');
+ const hasVisit=(key,name)=>trips.some(t=>isSameTravelRegion(t.region,key,name));
+ document.querySelectorAll('#koreaMap .detail-region').forEach(x=>x.classList.toggle('visited',hasVisit(x.dataset.region,legacyRegionName(x.dataset.region))));
+ document.querySelectorAll('#koreaMap .detail-label').forEach(x=>x.classList.toggle('visited-label',hasVisit(x.dataset.region,legacyRegionName(x.dataset.region))));
+ for(const area of Object.keys(TRAVEL_MAP_DATA)){
+   const count=TRAVEL_MAP_DATA[area].filter(r=>hasVisit(r.key,r.name)).length;
+   const el=document.querySelector(`[data-count="${area}"]`);if(el)el.textContent=count+'곳';
+ }
 }
-async function openTravel(region,displayName=legacyRegionName(region)){currentRegion=region;$('#travelRegion').textContent=displayName;$('#travelTitle').textContent=displayName+' 여행';$('#travelForm').reset();selectedTravelPhoto=null;$('#travelPreview').style.display='none';$('#travelPhotoText').style.display='block';const arr=(await storeAll('travel')).filter(x=>x.region===region).sort((a,b)=>b.start.localeCompare(a.start)||b.id-a.id);const box=$('#tripList');box.innerHTML='';arr.forEach(r=>{const d=document.createElement('div');d.className='trip-item';d.innerHTML=`<div class="trip-period">${displayDate(r.start)} ~ ${displayDate(r.end)}</div><div class="trip-text"></div>`;d.querySelector('.trip-text').textContent=r.content||'';if(r.photo){const im=document.createElement('img');im.className='trip-photo';im.src=URL.createObjectURL(r.photo);d.appendChild(im)}const acts=document.createElement('div');acts.className='actions';acts.innerHTML='<button class="badge delete" type="button">삭제</button>';acts.querySelector('button').onclick=async()=>{if(confirm('이 여행 기록을 삭제하시겠습니까?')){await storeDelete('travel',r.id);await renderTravelMap();openTravel(region,displayName)}};d.appendChild(acts);box.appendChild(d)});$('#travelModal').classList.add('on')}
-$('#travelClose').onclick=()=>$('#travelModal').classList.remove('on');$('#travelModal').onclick=e=>{if(e.target===$('#travelModal'))$('#travelModal').classList.remove('on')};$('#travelPhoto').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{selectedTravelPhoto=await resizeImage(f);$('#travelPreview').src=URL.createObjectURL(selectedTravelPhoto);$('#travelPreview').style.display='block';$('#travelPhotoText').style.display='none'}catch{toast('사진을 불러오지 못했습니다.')}};$('#travelForm').onsubmit=async e=>{e.preventDefault();const start=$('#travelStart').value,end=$('#travelEnd').value;if(!currentRegion||!start||!end)return;if(end<start){toast('종료일을 확인해주세요.');return}await storeAdd('travel',{region:currentRegion,start,end,content:$('#travelContent').value.trim(),photo:selectedTravelPhoto});await renderTravelMap();await openTravel(currentRegion);toast('여행 기록을 저장했습니다.')};
+let editingTravelId=null,travelDetailId=null,travelDisplayName='',travelRecordRegion=null;
+
+function travelRegionAliases(region,displayName){
+ const vals=new Set([region,displayName]);
+ try{vals.add(legacyRegionName(region));}catch(e){}
+ try{vals.add(legacyRegionName(displayName));}catch(e){}
+ return [...vals].filter(Boolean);
+}
+function isSameTravelRegion(savedRegion,region,displayName){
+ if(!savedRegion)return false;
+ const aliases=travelRegionAliases(region,displayName);
+ if(aliases.includes(savedRegion))return true;
+ try{
+   const legacy=legacyRegionName(savedRegion);
+   if(aliases.includes(legacy))return true;
+ }catch(e){}
+ return false;
+}
+function resetTravelForm(){
+ editingTravelId=null;selectedTravelPhoto=null;$('#travelForm').reset();
+ $('#travelPreview').removeAttribute('src');$('#travelPreview').style.display='none';
+ $('#travelPhotoText').style.display='block';$('#travelForm').querySelector('.save').textContent='여행 기록 저장';
+}
+async function renderTravelRecords(region=currentRegion,displayName=travelDisplayName){
+ const box=$('#tripList');if(!box)return;
+ const all=await storeAll('travel');
+ const arr=all.filter(x=>isSameTravelRegion(x.region,region,displayName))
+   .sort((x,y)=>(y.start||'').localeCompare(x.start||'')||y.id-x.id);
+ box.innerHTML='';
+ if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 여행 기록이 없습니다.<br>아래에서 첫 여행 기록을 추가하세요.</div>';return}
+ arr.forEach(r=>{
+   const d=document.createElement('div');d.className='book-list-item';
+   d.innerHTML='<div class="book-list-title"></div>';
+   d.querySelector('.book-list-title').textContent=(r.content||'').trim()||'(내용 없음)';
+   d.onclick=()=>showTravelDetail(r.id);
+   box.appendChild(d);
+ });
+}
+async function openTravel(region,displayName=legacyRegionName(region)){
+ currentRegion=region;travelRecordRegion=region;travelDisplayName=displayName;
+ $('#travelRegion').textContent=displayName;$('#travelTitle').textContent=displayName+' 여행';
+ resetTravelForm();await renderTravelRecords(region,displayName);$('#travelModal').classList.add('on');
+}
+async function showTravelDetail(id){
+ const r=(await storeAll('travel')).find(x=>x.id===id);if(!r)return;
+ travelDetailId=id;
+ $('#travelDetailPeriod').textContent=`${displayDate(r.start)} ~ ${displayDate(r.end)}`;
+ $('#travelDetailContent').textContent=r.content||'내용이 없습니다.';
+ const im=$('#travelDetailImage');
+ if(r.photo){im.src=URL.createObjectURL(r.photo);im.style.display='block';im.onclick=e=>{e.stopPropagation();openPhotoViewer(im.src)}}
+ else{im.style.display='none';im.removeAttribute('src')}
+ $('#travelDetailModal').classList.add('on');
+}
+function closeTravelDetail(){travelDetailId=null;$('#travelDetailModal').classList.remove('on')}
+$('#travelDetailClose').onclick=closeTravelDetail;
+$('#travelDetailModal').onclick=e=>{if(e.target===$('#travelDetailModal'))closeTravelDetail()};
+$('#travelDetailEdit').onclick=async()=>{
+ const r=(await storeAll('travel')).find(x=>x.id===travelDetailId);if(!r)return;
+ editingTravelId=r.id;selectedTravelPhoto=r.photo||null;travelRecordRegion=r.region||currentRegion;
+ $('#travelStart').value=r.start||'';$('#travelEnd').value=r.end||'';$('#travelContent').value=r.content||'';
+ if(r.photo){$('#travelPreview').src=URL.createObjectURL(r.photo);$('#travelPreview').style.display='block';$('#travelPhotoText').style.display='none'}
+ else{$('#travelPreview').removeAttribute('src');$('#travelPreview').style.display='none';$('#travelPhotoText').style.display='block'}
+ $('#travelForm').querySelector('.save').textContent='수정 저장';closeTravelDetail();
+};
+$('#travelDetailDelete').onclick=async()=>{
+ if(travelDetailId&&confirm('이 여행 기록을 삭제하시겠습니까?')){
+   await storeDelete('travel',travelDetailId);closeTravelDetail();await renderTravelMap();
+   await renderTravelRecords(currentRegion,travelDisplayName);toast('삭제했습니다.');
+ }
+};
+$('#travelClose').onclick=()=>$('#travelModal').classList.remove('on');
+$('#travelModal').onclick=e=>{if(e.target===$('#travelModal'))$('#travelModal').classList.remove('on')};
+$('#travelPhoto').onchange=async e=>{
+ const f=e.target.files[0];if(!f)return;
+ try{selectedTravelPhoto=await resizeImage(f);$('#travelPreview').src=URL.createObjectURL(selectedTravelPhoto);$('#travelPreview').style.display='block';$('#travelPhotoText').style.display='none'}
+ catch{toast('사진을 불러오지 못했습니다.')}
+};
+$('#travelForm').onsubmit=async e=>{
+ e.preventDefault();const start=$('#travelStart').value,end=$('#travelEnd').value;
+ if(!currentRegion||!start||!end)return;
+ if(end<start){toast('종료일을 확인해주세요.');return}
+ const region=editingTravelId?(travelRecordRegion||currentRegion):currentRegion;
+ const obj={region,start,end,content:$('#travelContent').value.trim(),photo:selectedTravelPhoto};
+ if(editingTravelId){obj.id=editingTravelId;await storePut('travel',obj)}
+ else await storeAdd('travel',obj);
+ const edited=!!editingTravelId;resetTravelForm();travelRecordRegion=currentRegion;
+ await renderTravelMap();await renderTravelRecords(currentRegion,travelDisplayName);
+ toast(edited?'수정했습니다.':'여행 기록을 저장했습니다.');
+};
 function clearStore(name){return new Promise((res,rej)=>{const r=db.transaction(name,'readwrite').objectStore(name).clear();r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
 function blobToDataURL(blob){return new Promise((res,rej)=>{if(!blob){res(null);return}const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(blob)})}
 function dataURLToBlob(dataURL){if(!dataURL)return null;const [head,data]=dataURL.split(',');const mime=(head.match(/data:([^;]+)/)||[])[1]||'application/octet-stream';const bin=atob(data);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);return new Blob([arr],{type:mime})}
@@ -666,8 +845,8 @@ function stamp(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.g
 
 // Golf
 let golfActiveHole=0;
-let golfHoles=Array.from({length:18},()=>({par:0,strokes:0,ob:0,hazard:0,onion:false,actions:[]}));
-function golfFinal(h){return h.onion?(Number(h.par)||0)*2:h.strokes+h.ob*2+h.hazard}
+let golfHoles=Array.from({length:18},()=>({par:0,strokes:0}));
+function golfFinal(h){const p=Number(h.par)||0,sc=Math.max(0,Number(h.strokes)||0);return p?Math.min(sc,p*2):sc}
 function golfLabel(h){
  const p=Number(h.par)||0,sc=golfFinal(h); if(!p||!sc)return '';
  const d=sc-p;
@@ -685,7 +864,7 @@ function golfDiffText(v){return v===0?'E':(v>0?'+'+v:String(v))}
 
 function golfEnglishLabel(h){
  const p=Number(h.par)||0,sc=golfFinal(h); if(!p||!sc)return '';
- if(h.onion)return 'DOUBLE PAR';
+ if(p&&sc===p*2)return 'DOUBLE PAR';
  const d=sc-p;
  if(sc===1)return 'HOLE IN ONE';
  if(d<=-3)return 'ALBATROSS';
@@ -725,21 +904,20 @@ function renderGolfSummary(){
 function renderGolfControl(){
  const h=golfHoles[golfActiveHole]; if(!h)return;
  $('#golfActiveTitle').textContent=`${golfActiveHole+1} HOLE · PAR ${h.par||'-'} · ${golfFinal(h)||0}타${golfEnglishLabel(h)?' · '+golfEnglishLabel(h)+' ('+golfCardDiff(h)+')':''}`;
- $('#golfOnion').textContent=h.onion?'양파 취소':'양파';
- $('#golfOnion').classList.toggle('onion-on',h.onion);
  document.querySelectorAll('[data-golf-par]').forEach(btn=>btn.classList.toggle('selected',Number(btn.dataset.golfPar)===Number(h.par)));
  const custom=$('#golfParCustom');
  if(custom && !custom.classList.contains('show')) custom.value=h.par&&!([3,4,5].includes(Number(h.par)))?h.par:'';
 }
 function golfAction(type){
- const h=golfHoles[golfActiveHole];
- if(type!=='onion'&&h.onion)return toast('양파를 취소한 뒤 입력하세요.');
- if(type==='stroke'){h.strokes++;h.actions.push('stroke')}
- if(type==='ob'){h.ob++;h.actions.push('ob')}
- if(type==='hazard'){h.hazard++;h.actions.push('hazard')}
+ const h=golfHoles[golfActiveHole],p=Number(h.par)||0;
+ if(!p)return toast('정규타수를 먼저 선택하세요.');
+ const max=p*2,cur=golfFinal(h);
+ if(type==='minus')h.strokes=Math.max(0,cur-1);
+ if(type==='stroke')h.strokes=Math.min(max,cur+1);
+ if(type==='ob')h.strokes=Math.min(max,cur+2);
+ if(type==='hazard')h.strokes=Math.min(max,cur+1);
  renderGolf();
 }
-
 document.querySelectorAll('[data-golf-par]').forEach(btn=>btn.onclick=()=>{
  const h=golfHoles[golfActiveHole];h.par=Number(btn.dataset.golfPar);
  $('#golfParCustom').classList.remove('show');renderGolf();
@@ -756,30 +934,20 @@ $('#golfParCustom').oninput=()=>{
 };
 
 $('#golfHit').onclick=()=>golfAction('stroke');
+$('#golfMinus').onclick=()=>golfAction('minus');
 $('#golfOB').onclick=()=>golfAction('ob');
 $('#golfHazard').onclick=()=>golfAction('hazard');
-$('#golfOnion').onclick=()=>{const h=golfHoles[golfActiveHole];h.onion=!h.onion;renderGolf()};
-$('#golfUndo').onclick=()=>{const h=golfHoles[golfActiveHole];if(h.onion){h.onion=false;renderGolf();return}const a=h.actions.pop();if(!a)return toast('되돌릴 기록이 없습니다.');if(a==='stroke')h.strokes=Math.max(0,h.strokes-1);if(a==='ob')h.ob=Math.max(0,h.ob-1);if(a==='hazard')h.hazard=Math.max(0,h.hazard-1);renderGolf()};
+
 $('#golfToday').onclick=()=>{$('#golfDate').value=new Date().toLocaleDateString('sv-SE')};
 document.querySelectorAll('[data-open="golfView"]').forEach(btn=>btn.addEventListener('click',()=>{renderGolf();renderGolfHistory()}));
-async function renderGolfHistory(){
- const arr=(await storeAll('golf')).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);
- $('#golfCount').textContent=arr.length+'건';const box=$('#golfHistory');box.innerHTML='';
- if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 라운드가 없습니다.</div>';return}
- arr.forEach(r=>{const card=document.createElement('article');card.className='golf-record';const diff=Number(r.totalScore)-Number(r.totalPar);card.innerHTML=`<div class="golf-record-top"><div class="golf-record-course"></div><div class="golf-record-date">${displayDate(r.date)}</div></div><div class="golf-record-score">${r.totalScore}타 <span style="font-size:14px;color:#9298a2">${golfDiffText(diff)}</span></div><div class="golf-record-sub"></div><div class="actions"><button class="badge delete" type="button">삭제</button></div>`;card.querySelector('.golf-record-course').textContent=r.course;card.querySelector('.golf-record-sub').textContent=`PAR ${r.totalPar}${r.partners?' · 동반자 '+r.partners:''}`;card.querySelector('.delete').onclick=async()=>{if(confirm('이 라운드 기록을 삭제하시겠습니까?')){await storeDelete('golf',r.id);renderGolfHistory();toast('삭제했습니다.')}};box.appendChild(card)})
-}
-$('#golfSave').onclick=async()=>{
- const date=$('#golfDate').value,course=$('#golfCourse').value.trim(),partners=$('#golfPartners').value.trim();
- if(!date)return toast('날짜를 입력하세요.');if(!course)return toast('골프장을 입력하세요.');
- if(golfHoles.some(h=>!Number(h.par)))return toast('18홀의 PAR을 모두 입력하세요.');
- if(golfHoles.some(h=>golfFinal(h)<=0))return toast('18홀의 타수를 모두 기록하세요.');
- const totalPar=golfHoles.reduce((a,h)=>a+Number(h.par),0),totalScore=golfHoles.reduce((a,h)=>a+golfFinal(h),0);
- await storeAdd('golf',{date,course,partners,totalPar,totalScore,holes:golfHoles.map(h=>({par:Number(h.par),strokes:h.strokes,ob:h.ob,hazard:h.hazard,onion:h.onion,score:golfFinal(h),result:golfLabel(h)}))});
- await renderGolfHistory();toast(`라운드를 저장했습니다. ${totalScore}타 (${golfDiffText(totalScore-totalPar)})`);
- golfHoles=Array.from({length:18},()=>({par:0,strokes:0,ob:0,hazard:0,onion:false,actions:[]}));golfActiveHole=0;$('#golfCourse').value='';$('#golfPartners').value='';renderGolf();
-};
-
-async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'6.4',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
+let editingGolfId=null,golfDetailId=null;
+async function showGolfDetail(id){const r=(await storeAll('golf')).find(x=>x.id===id);if(!r)return;golfDetailId=id;$('#golfDetailTitle').textContent=r.course||'골프 기록';const diff=Number(r.totalScore)-Number(r.totalPar);const holes=(r.holes||[]).map((h,i)=>`${i+1}H · PAR ${h.par} · ${h.score}타 · ${Number(h.score)-Number(h.par)>0?'+':''}${Number(h.score)-Number(h.par)}`).join('\n');$('#golfDetailContent').textContent=`${displayDate(r.date)}\n${r.partners?'동반자 · '+r.partners+'\n':''}PAR ${r.totalPar} · ${r.totalScore}타 · ${diff>0?'+':''}${diff}\n\n${holes}`;$('#golfDetailModal').classList.add('on')}
+function closeGolfDetail(){golfDetailId=null;$('#golfDetailModal').classList.remove('on')}$('#golfDetailClose').onclick=closeGolfDetail;$('#golfDetailModal').onclick=e=>{if(e.target===$('#golfDetailModal'))closeGolfDetail()};
+$('#golfDetailEdit').onclick=async()=>{const r=(await storeAll('golf')).find(x=>x.id===golfDetailId);if(!r)return;editingGolfId=r.id;$('#golfDate').value=r.date||'';$('#golfCourse').value=r.course||'';$('#golfPartners').value=r.partners||'';golfHoles=(r.holes||[]).map(h=>{const par=Number(h.par)||0;let strokes=Number(h.score);if(!Number.isFinite(strokes))strokes=(Number(h.strokes)||0)+(Number(h.ob)||0)*2+(Number(h.hazard)||0);return{par,strokes:Math.max(0,strokes)}});while(golfHoles.length<18)golfHoles.push({par:0,strokes:0});golfActiveHole=0;$('#golfSave').textContent='수정 저장';closeGolfDetail();renderGolf();window.scrollTo({top:0,behavior:'smooth'})};
+$('#golfDetailDelete').onclick=async()=>{if(golfDetailId&&confirm('이 라운드 기록을 삭제하시겠습니까?')){await storeDelete('golf',golfDetailId);closeGolfDetail();renderGolfHistory();toast('삭제했습니다.')}};
+async function renderGolfHistory(){const arr=(await storeAll('golf')).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);$('#golfCount').textContent=arr.length+'건';const box=$('#golfHistory');box.innerHTML='';if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 라운드가 없습니다.</div>';return}arr.forEach(r=>{const card=document.createElement('article');card.className='book-list-item';card.innerHTML='<div class="book-list-title"></div>';card.querySelector('.book-list-title').textContent=r.course||'골프 기록';card.onclick=()=>showGolfDetail(r.id);box.appendChild(card)})}
+$('#golfSave').onclick=async()=>{const date=$('#golfDate').value,course=$('#golfCourse').value.trim(),partners=$('#golfPartners').value.trim();if(!date)return toast('날짜를 입력하세요.');if(!course)return toast('골프장을 입력하세요.');if(golfHoles.some(h=>!Number(h.par)))return toast('18홀의 PAR을 모두 입력하세요.');if(golfHoles.some(h=>golfFinal(h)<=0))return toast('18홀의 타수를 모두 기록하세요.');const totalPar=golfHoles.reduce((a,h)=>a+Number(h.par),0),totalScore=golfHoles.reduce((a,h)=>a+golfFinal(h),0),obj={date,course,partners,totalPar,totalScore,holes:golfHoles.map(h=>({par:Number(h.par),score:golfFinal(h),result:golfLabel(h)}))};if(editingGolfId){obj.id=editingGolfId;await storePut('golf',obj)}else await storeAdd('golf',obj);const edited=!!editingGolfId;editingGolfId=null;$('#golfSave').textContent='라운드 저장';await renderGolfHistory();toast(edited?'수정했습니다.':`라운드를 저장했습니다. ${totalScore}타 (${golfDiffText(totalScore-totalPar)})`);golfHoles=Array.from({length:18},()=>({par:0,strokes:0}));golfActiveHole=0;$('#golfCourse').value='';$('#golfPartners').value='';renderGolf()};
+async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'7.6',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
 async function restoreAllData(file){try{const text=await file.text(),data=JSON.parse(text);if(data.app!=='Min'||!Array.isArray(data.memo)||!Array.isArray(data.carlog))throw new Error('invalid');const books=Array.isArray(data.book)?data.book:[],trips=Array.isArray(data.travel)?data.travel:[],golf=Array.isArray(data.golf)?data.golf:[];if((await storeAll('memo')).length||(await storeAll('carlog')).length||(await storeAll('book')).length||(await storeAll('travel')).length||(await storeAll('golf')).length){if(!confirm('현재 데이터가 모두 지워지고 선택한 저장 파일로 복원됩니다. 계속하시겠습니까?'))return}await clearStore('memo');await clearStore('carlog');await clearStore('book');await clearStore('travel');await clearStore('golf');for(const r of data.memo){const x={...r};delete x.id;await storeAdd('memo',x)}for(const r of data.carlog){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('carlog',x)}for(const r of books){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('book',x)}for(const r of trips){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('travel',x)}for(const r of golf){const x={...r};delete x.id;await storeAdd('golf',x)}await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderGolfHistory()]);toast('전체 데이터를 복원했습니다.')}catch(e){console.error(e);toast('올바른 Min 저장 파일이 아닙니다.')}finally{$('#restoreFile').value=''}}
 $('#exportAll').onclick=exportAllData;$('#importAll').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=e=>{const f=e.target.files[0];if(f)restoreAllData(f)};
 function openPhotoViewer(src){if(!src)return;const v=$('#photoViewer'),im=$('#photoViewerImage');im.src=src;v.classList.add('open');v.setAttribute('aria-hidden','false');document.body.classList.add('photo-viewer-open');v.scrollTop=0}
@@ -790,7 +958,7 @@ document.addEventListener('click',e=>{const im=e.target.closest&&e.target.closes
 (async()=>{try{await openDB();await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap()]);await initTravelMap();showView('homeView')}catch(e){alert('이 브라우저에서는 저장소를 사용할 수 없습니다.')}})();
 </script>
 <script id="app-version-config">
-const APP_VERSION = '6.4';
+const APP_VERSION = '7.6';
 document.addEventListener('DOMContentLoaded',()=>{
   const el=document.getElementById('appVersion');
   if(el) el.textContent='v.'+APP_VERSION;
@@ -798,12 +966,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
-
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.error('Service Worker registration failed:', err));
-  });
+ window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(err => console.error('Service Worker registration failed:', err)); });
 }
 </script>
 </body></html>
