@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Min's Note</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#f5f6f8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Min's Note">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
 <style>
 :root{--bg:#f5f6f8;--card:#fff;--ink:#15171a;--muted:#747a84;--line:#e7e9ed;--accent:#17191d;--danger:#9a3c35}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}.app{max-width:620px;margin:auto;min-height:100vh;padding-bottom:92px}.top{position:sticky;top:0;z-index:10;background:rgba(245,246,248,.94);backdrop-filter:blur(12px);padding:18px 18px 12px;border-bottom:1px solid var(--line)}.brand{font-size:28px;font-weight:700;letter-spacing:-1px}.sub{font-size:13px;color:var(--muted);margin-top:2px}.tabs{display:flex;gap:8px;margin-top:16px;overflow-x:auto}.tab{border:0;background:#e9ebef;color:#686d76;padding:9px 15px;border-radius:999px;font-weight:600;white-space:nowrap}.tab.on{background:var(--accent);color:#fff}main{padding:16px}.view{display:none}.view.on{display:block}.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 5px 20px rgba(0,0,0,.035)}.panel h2{font-size:17px;margin:0 0 15px}.field{margin:13px 0}.label{display:block;font-size:13px;font-weight:600;margin:0 0 7px}.input,.textarea{width:100%;border:1px solid #dfe2e7;border-radius:13px;padding:0 14px;font-size:16px;background:#fff;outline:none;font-family:inherit}.input{height:48px}.textarea{min-height:130px;padding:13px 14px;resize:vertical;line-height:1.55}.input:focus,.textarea:focus{border-color:#8d929a}.date-row{display:grid;grid-template-columns:1fr 72px;gap:8px}.today{border:0;border-radius:13px;background:#eceef1;font-weight:600;font-size:14px}.photo-box{height:190px;border:1.5px dashed #ccd0d6;border-radius:16px;overflow:hidden;position:relative;background:#f8f9fa;display:flex;align-items:center;justify-content:center}.photo-box img{width:100%;height:100%;object-fit:cover;display:none}.photo-label{color:#6f7580;font-weight:600;text-align:center;font-size:14px}.photo-label small{display:block;font-weight:500;margin-top:5px}.photo-box input{position:absolute;inset:0;opacity:0;width:100%;height:100%}.save{width:100%;height:52px;border:0;border-radius:15px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;margin-top:8px}.save:active{transform:scale(.99)}.section-title{display:flex;justify-content:space-between;align-items:end;margin:24px 2px 10px}.section-title h2{font-size:18px;margin:0}.count{font-size:12px;color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:35px 10px}.records{display:grid;gap:12px}.record,.memo-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.record-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#eee;display:block}.record-body,.memo-body{padding:14px}.record-top,.memo-top{display:flex;justify-content:space-between;gap:12px}.record-title,.memo-title{font-weight:600;font-size:17px;min-width:0}.record-date,.memo-date{color:var(--muted);font-size:13px;white-space:nowrap}.place{color:#626873;font-size:14px;margin-top:5px}.meta{display:flex;justify-content:space-between;gap:10px;margin-top:13px;padding-top:12px;border-top:1px solid #eff0f2;font-weight:600}.money{font-size:16px}.km{font-size:14px;color:#555b64}.memo-preview{margin-top:8px;color:#555b64;font-size:14px;line-height:1.55;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.actions{display:flex;justify-content:flex-end;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid #eff0f2}.badge{border:1px solid #dfe2e7;background:#f5f6f8;color:#454a52;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:600}.badge.delete{color:var(--danger)}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#17191d;color:#fff;padding:11px 17px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;bottom:34px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:50;display:none;align-items:flex-end;justify-content:center}.modal.on{display:flex}.sheet{width:min(620px,100%);max-height:86vh;overflow:auto;background:#fff;border-radius:22px 22px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom))}.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.sheet-head h3{margin:0;font-size:19px}.close{border:0;background:#eceef1;border-radius:999px;width:34px;height:34px;font-size:18px}.detail-text{white-space:pre-wrap;line-height:1.65;margin-top:16px;color:#34383e}.detail-date{margin-top:16px;color:var(--muted);font-size:13px}.cancel{width:100%;height:48px;border:0;border-radius:14px;background:#eceef1;color:#333;font-size:15px;font-weight:600;margin-top:8px}.memo-list-head{margin-top:4px}.memo-add{width:38px;height:38px;border:0;border-radius:50%;background:var(--accent);color:#fff;font-size:24px;line-height:1;font-weight:500;display:flex;align-items:center;justify-content:center}.memo-card .memo-body{display:flex;align-items:center;gap:10px;padding:12px 14px}.memo-card .memo-title{flex:1;font-size:15px;font-weight:600;line-height:1.45;word-break:break-word}.memo-card .actions{margin:0;padding:0;border:0;flex:none;gap:5px}.memo-card .badge{padding:5px 8px;font-size:11px}.badge.important.on{background:#17191d;color:#fff;border-color:#17191d}.memo-card.important{border-color:#aeb2b8}@media(max-width:420px){.memo-card .memo-body{align-items:flex-start;flex-wrap:wrap}.memo-card .memo-title{flex-basis:100%}.memo-card .actions{width:100%;justify-content:flex-end}}@media(min-width:700px){.app{padding-top:10px}.modal{align-items:center}.sheet{border-radius:22px;max-height:80vh}}
@@ -29,40 +37,31 @@
   --muted:#9298a2;
   --line:#292d33;
   --accent:#f2f3f5;
-  --danger:#ff7b72;
-}
+  --danger:#ff7b72;}
 html{background:#090a0c;color-scheme:dark}
 body{background:var(--bg);color:var(--ink)}
 .top{background:rgba(9,10,12,.94);border-bottom-color:var(--line)}
 .panel,.record,.memo-card,.tool-card,.province-card,.travel-map,.sheet{
-  background:var(--card);border-color:var(--line);color:var(--ink)
-}
+  background:var(--card);border-color:var(--line);color:var(--ink)}
 .panel,.tool-card{box-shadow:0 5px 22px rgba(0,0,0,.22)}
 .input,.textarea,.memo-search{
-  background:#0d0f12;color:var(--ink);border-color:#343941
-}
+  background:#0d0f12;color:var(--ink);border-color:#343941}
 .input::placeholder,.textarea::placeholder,.memo-search::placeholder{color:#6f7680}
 .input:focus,.textarea:focus,.memo-search:focus{border-color:#747b86}
 .today,.cancel,.close,.content-remove{
-  background:#202329;color:#e7e9ec
-}
+  background:#202329;color:#e7e9ec}
 .data-btn,.back-home,.content-add{
-  background:#111317;color:#e8eaed;border-color:#343941
-}
+  background:#111317;color:#e8eaed;border-color:#343941}
 .save,.memo-add{
-  background:#f1f2f4;color:#0b0c0e
-}
+  background:#f1f2f4;color:#0b0c0e}
 .badge{
-  background:#191c21;color:#cfd3d8;border-color:#343941
-}
+  background:#191c21;color:#cfd3d8;border-color:#343941}
 .badge.important.on{
-  background:#f1f2f4;color:#0b0c0e;border-color:#f1f2f4
-}
+  background:#f1f2f4;color:#0b0c0e;border-color:#f1f2f4}
 .memo-card.important{border-color:#666d77}
 .place,.km,.memo-preview,.detail-text,.home-copy,.tool-desc,.province-count,
 .travel-region-name,.trip-period,.map-note,.map-toolbar span,.count,.empty,.sub{
-  color:var(--muted)
-}
+  color:var(--muted)}
 .meta,.actions{border-top-color:#292d33}
 .photo-box{background:#0d0f12;border-color:#3b4048}
 .photo-label{color:#8f96a0}
@@ -74,17 +73,13 @@ body{background:var(--bg);color:var(--ink)}
 
 /* Dark travel maps: visited areas are bright, unvisited areas remain dark. */
 .travel-map .region,.travel-map .detail-region{
-  fill:#111317;stroke:#7b828c
-}
+  fill:#111317;stroke:#7b828c}
 .travel-map .region.visited,.travel-map .detail-region.visited{
-  fill:#f1f2f4;stroke:#f1f2f4
-}
+  fill:#f1f2f4;stroke:#f1f2f4}
 .travel-map .region-label,.travel-map .detail-label{
-  fill:#e3e6ea;stroke:#111317
-}
+  fill:#e3e6ea;stroke:#111317}
 .travel-map .region-label.visited-label,.travel-map .detail-label.visited-label{
-  fill:#0b0c0e;stroke:#f1f2f4
-}
+  fill:#0b0c0e;stroke:#f1f2f4}
 
 
 /* Min 4.5: use only Min's own search clear button */
@@ -94,11 +89,9 @@ body{background:var(--bg);color:var(--ink)}
 .memo-search::-webkit-search-results-decoration{
   -webkit-appearance:none;
   appearance:none;
-  display:none;
-}
+  display:none;}
 
 
-/* Min 4.6 - Golf score recorder */
 .golf-setup{margin-bottom:14px}
 .golf-date-row{display:grid;grid-template-columns:1fr auto;gap:8px}
 .golf-summary{position:sticky;top:8px;z-index:4;background:#111317;border:1px solid #292d33;border-radius:16px;padding:12px 14px;margin-bottom:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.28)}
@@ -117,9 +110,8 @@ body{background:var(--bg);color:var(--ink)}
 .golf-hit{width:100%;height:92px;border:1px solid #3b414a;border-radius:18px;background:#181b20;color:#f2f3f5;font-size:25px;font-weight:650}
 .golf-hit small{display:block;font-size:12px;font-weight:450;color:#9298a2;margin-top:5px}
 .golf-penalties{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:9px}
-.golf-penalties button,.golf-undo{border:1px solid #343941;background:#0d0f12;color:#f2f3f5;border-radius:12px;padding:11px 5px;font-size:12px}
+.golf-penalties button{border:1px solid #343941;background:#0d0f12;color:#f2f3f5;border-radius:12px;padding:11px 5px;font-size:12px}
 
-.golf-undo{width:100%;margin-top:8px}
 .golf-save{width:100%;border:0;border-radius:14px;padding:14px;background:#f2f3f5;color:#090a0c;font-size:14px;font-weight:650}
 .golf-history{display:flex;flex-direction:column;gap:10px}
 .golf-record{border:1px solid #292d33;background:#111317;border-radius:16px;padding:14px}
@@ -129,13 +121,11 @@ body{background:var(--bg);color:var(--ink)}
 @media(max-width:360px){.golf-holes{grid-template-columns:repeat(2,1fr)}}
 
 
-/* Min 4.7 - Golf visibility/UI refinement */
 .golf-holes{
   display:grid;
   grid-template-columns:repeat(9,minmax(0,1fr));
   gap:5px;
-  margin-bottom:14px;
-}
+  margin-bottom:14px;}
 .golf-hole{
   min-width:0;
   border:1px solid #343941;
@@ -144,14 +134,12 @@ body{background:var(--bg);color:var(--ink)}
   padding:7px 2px 6px;
   text-align:center;
   color:#f2f3f5;
-  cursor:pointer;
-}
+  cursor:pointer;}
 .golf-hole.active{
   background:#f2f3f5;
   color:#090a0c;
   outline:none;
-  border-color:#f2f3f5;
-}
+  border-color:#f2f3f5;}
 .golf-hole-no{font-size:10px;color:#9298a2;margin-bottom:3px}
 .golf-hole.active .golf-hole-no,
 .golf-hole.active .golf-result{color:#4e535a}
@@ -166,8 +154,7 @@ body{background:var(--bg);color:var(--ink)}
 .golf-par-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .golf-par-buttons button{
   border:1px solid #343941;background:#0d0f12;color:#f2f3f5;
-  border-radius:11px;padding:10px 4px;font-size:13px
-}
+  border-radius:11px;padding:10px 4px;font-size:13px}
 .golf-par-buttons button.selected{background:#f2f3f5;color:#090a0c;border-color:#f2f3f5}
 .golf-par-custom{width:100%;margin-top:7px;display:none}
 .golf-par-custom.show{display:block}
@@ -175,16 +162,13 @@ body{background:var(--bg);color:var(--ink)}
 @media(max-width:520px){
   .golf-holes{grid-template-columns:repeat(9,minmax(0,1fr));gap:3px}
   .golf-hole{padding:6px 1px;border-radius:8px}
-  .golf-hole .golf-score{font-size:16px}
-}
+  .golf-hole .golf-score{font-size:16px}}
 
 
-/* Min 5.0 - Memo add/edit as centered modal card */
 #memoModal{
   align-items:center;
   justify-content:center;
-  padding:20px;
-}
+  padding:20px;}
 #memoModal .sheet{
   width:min(100%,520px);
   max-height:min(82vh,720px);
@@ -193,8 +177,7 @@ body{background:var(--bg);color:var(--ink)}
   overflow-y:auto;
   overscroll-behavior:contain;
   transform:none;
-  position:relative;
-}
+  position:relative;}
 #memoModal.show .sheet{transform:none}
 
 
@@ -203,21 +186,18 @@ body{background:var(--bg);color:var(--ink)}
    Only header.top is inverted. */
 :root{
  --bg:#f7f7f6;--card:#fff;--ink:#151515;--muted:#737373;
- --line:#d7d7d4;--accent:#151515;--danger:#8f2d28;
-}
+ --line:#d7d7d4;--accent:#151515;--danger:#8f2d28;}
 html{background:#f7f7f6;color-scheme:light}
 body,.home,.view{background:#f7f7f6!important;color:#151515!important}
 
 /* Exact inverted header: Min / Simply Yours. / 저장 / 복원 */
 header.top{
  background:#151515!important;color:#fff!important;
- border-color:#151515!important
-}
+ border-color:#151515!important}
 header.top *{color:#fff!important}
 header.top button,header.top .btn{
  background:#151515!important;color:#fff!important;
- border-color:#626262!important;box-shadow:none!important
-}
+ border-color:#626262!important;box-shadow:none!important}
 header.top button:active,header.top .btn:active{background:#292929!important}
 header.top svg,header.top svg *{stroke:#fff!important}
 
@@ -226,8 +206,7 @@ header.top svg,header.top svg *{stroke:#fff!important}
 .tool-card,.panel,.record,.golf-record,.golf-control,.golf-summary,
 .province-card,.region-card,.travel-region-card{
  background:#fff!important;color:#151515!important;
- border:1px solid #d7d7d4!important;box-shadow:none!important
-}
+ border:1px solid #d7d7d4!important;box-shadow:none!important}
 .tool-card:active,.record:active,.province-card:active,.region-card:active{background:#f5f5f3!important}
 
 /* Home icons */
@@ -245,65 +224,53 @@ input[type="file"],
 .car-photo-upload,.travel-photo-upload,
 label[for*="photo"],label[for*="Photo"],label[for*="image"],label[for*="Image"]{
  background:#fff!important;color:#151515!important;
- border-color:#d5d5d2!important;box-shadow:none!important
-}
+ border-color:#d5d5d2!important;box-shadow:none!important}
 .input,.textarea,.memo-search,#golfParCustom{border:1px solid #d5d5d2!important}
 .input:focus,.textarea:focus,.memo-search:focus,#golfParCustom:focus{
- border-color:#7f7f7b!important;outline:none!important;box-shadow:none!important
-}
+ border-color:#7f7f7b!important;outline:none!important;box-shadow:none!important}
 .input::placeholder,.textarea::placeholder,.memo-search::placeholder{color:#a1a19d!important}
 input[type="file"]::file-selector-button,
 input[type="file"]::-webkit-file-upload-button{
- background:#fff!important;color:#151515!important;border:1px solid #cfcfcc!important
-}
+ background:#fff!important;color:#151515!important;border:1px solid #cfcfcc!important}
 
 /* Buttons remain white */
 button,.memo-add,.primary,.golf-save,.today,.golf-hit,
-.golf-par-buttons button,.golf-penalties button,.golf-undo{
+.golf-par-buttons button,.golf-penalties button{
  background:#fff!important;color:#151515!important;
- border:1px solid #cfcfcc!important;box-shadow:none!important
-}
+ border:1px solid #cfcfcc!important;box-shadow:none!important}
 button:active,.memo-add:active,.primary:active,.golf-save:active,.today:active,
-.golf-hit:active,.golf-par-buttons button:active,.golf-penalties button:active,.golf-undo:active{
- background:#f1f1ef!important
-}
+.golf-hit:active,.golf-par-buttons button:active,.golf-penalties button:active:active{
+ background:#f1f1ef!important}
 /* Restore inverse header after generic button rule */
 header.top button,header.top .btn{
- background:#151515!important;color:#fff!important;border-color:#626262!important
-}
+ background:#151515!important;color:#fff!important;border-color:#626262!important}
 
 /* Selection by border, not black fill */
 .golf-hole{background:#fff!important;color:#151515!important;border:1px solid #d8d8d5!important}
 .golf-hole.active{
  background:#fff!important;color:#151515!important;
- border:2px solid #696965!important;box-shadow:inset 0 0 0 1px #ececea!important
-}
+ border:2px solid #696965!important;box-shadow:inset 0 0 0 1px #ececea!important}
 .golf-hole.active .golf-hole-no,.golf-hole.active .golf-par-mini,.golf-hole.active .golf-result{color:#555!important}
 .golf-par-buttons button.selected{
- background:#fff!important;color:#111!important;border:2px solid #696965!important;font-weight:700!important
-}
+ background:#fff!important;color:#111!important;border:2px solid #696965!important;font-weight:700!important}
 .province-card.active,.region-card.active,.travel-region-card.active{
- background:#fff!important;color:#111!important;border:2px solid #696965!important
-}
+ background:#fff!important;color:#111!important;border:2px solid #696965!important}
 
 /* Modals */
 .modal{background:rgba(30,30,30,.30)!important}
 .sheet,#memoModal .sheet,#memoDetailModal .sheet{
  background:#fff!important;color:#151515!important;border:1px solid #cececb!important;
- box-shadow:0 18px 46px rgba(0,0,0,.10)!important
-}
+ box-shadow:0 18px 46px rgba(0,0,0,.10)!important}
 #memoModal .input,#memoModal .textarea{background:#fff!important;color:#151515!important}
 
 /* Travel map */
 .travel-map{background:#fff!important;border:1px solid #d7d7d4!important}
 .travel-map .region,.travel-map .detail-region{
- fill:#fff!important;stroke:#aaa9a5!important;stroke-width:1.15!important
-}
+ fill:#fff!important;stroke:#aaa9a5!important;stroke-width:1.15!important}
 .travel-map .visited{fill:#e4e4e1!important;stroke:#858580!important}
 .travel-map text,.travel-map .region-label,.travel-map .detail-label{
  fill:#181818!important;color:#181818!important;font-weight:600!important;
- paint-order:stroke!important;stroke:#fff!important;stroke-width:2.2px!important;stroke-linejoin:round!important
-}
+ paint-order:stroke!important;stroke:#fff!important;stroke-width:2.2px!important;stroke-linejoin:round!important}
 hr,.divider{border-color:#dededb!important;background:#dededb!important}
 .badge,.close{background:#fff!important;color:#151515!important;border-color:#d3d3d0!important}
 .delete,.danger{background:#fff!important;color:#8f2d28!important;border-color:#d7d7d4!important}
@@ -324,19 +291,16 @@ label,
 .panel label,
 .golf-control label{
  color:#151515!important;
- font-weight:500!important;
-}
+ font-weight:500!important;}
 /* Keep header text inverse */
 header.top label,
 header.top .label{
- color:#fff!important;
-}
+ color:#fff!important;}
 /* Placeholder/helper text stays secondary gray */
 input::placeholder,
 textarea::placeholder{
  color:#a1a19d!important;
- font-weight:400!important;
-}
+ font-weight:400!important;}
 
 
 /* Min 5.4 — readability pass
@@ -347,8 +311,7 @@ textarea::placeholder{
 label,.label,.field-label,.form-label,.input-label,
 .photo-label,.memo-label,.car-label,.travel-label,.golf-label{
  color:#151515!important;
- font-weight:500!important;
-}
+ font-weight:500!important;}
 
 /* Golf detail: all essential titles/status text must be readable on white */
 .golf-control,
@@ -365,8 +328,7 @@ label,.label,.field-label,.form-label,.input-label,
 .golf-par-label,
 .golf-par-select,
 .golf-par-select-title{
- color:#151515!important;
-}
+ color:#151515!important;}
 
 /* Known golf text blocks that may inherit old dark-theme colors */
 #golfView .section-title,
@@ -375,8 +337,7 @@ label,.label,.field-label,.form-label,.input-label,
 #golfView h2,
 #golfView h3,
 #golfView strong{
- color:#151515!important;
-}
+ color:#151515!important;}
 
 /* Secondary golf metadata: visible gray, not washed out */
 #golfView .muted,
@@ -384,29 +345,24 @@ label,.label,.field-label,.form-label,.input-label,
 #golfView .golf-par-mini,
 #golfView .golf-result,
 #golfView small{
- color:#666662!important;
-}
+ color:#666662!important;}
 
 /* Active hole stays white; primary text black */
 #golfView .golf-hole.active{
  background:#fff!important;color:#151515!important;
- border:2px solid #696965!important
-}
+ border:2px solid #696965!important}
 #golfView .golf-hole.active .golf-hole-no,
 #golfView .golf-hole.active .golf-par-mini,
 #golfView .golf-hole.active .golf-result{
- color:#4f4f4c!important
-}
+ color:#4f4f4c!important}
 
 /* Golf summary metrics */
 #golfView .golf-summary,
 #golfView .golf-summary *{
- color:#151515;
-}
+ color:#151515;}
 #golfView .golf-summary .muted,
 #golfView .golf-summary small{
- color:#666662!important;
-}
+ color:#666662!important;}
 
 /* Inputs/placeholders: keep hierarchy clear */
 input,textarea,select{color:#151515}
@@ -414,14 +370,12 @@ input::placeholder,textarea::placeholder{color:#999995!important}
 
 /* Other light-screen secondary text gets a safe contrast floor */
 body .muted,body .helper,body .hint,body .subtext{
- color:#6f6f6b;
-}
+ color:#6f6f6b;}
 
 /* Header remains the sole inverse area */
 header.top,header.top *{color:#fff!important}
 header.top button,header.top .btn{
- background:#151515!important;color:#fff!important;border-color:#626262!important
-}
+ background:#151515!important;color:#fff!important;border-color:#626262!important}
 
 
 /* Min 5.5 — exact golf PAR picker label readability fix */
@@ -429,8 +383,7 @@ header.top button,header.top .btn{
 .golf-control .golf-par-picker-label{
  color:#151515!important;
  font-weight:500!important;
- opacity:1!important;
-}
+ opacity:1!important;}
 
 
 /* Min 5.6 — selected-hole English result label above PAR picker */
@@ -440,21 +393,18 @@ header.top button,header.top .btn{
  color:#151515!important;
  -webkit-text-fill-color:#151515!important;
  opacity:1!important;
- font-weight:600!important;
-}
+ font-weight:600!important;}
 
 
 /* Min 5.7 — memo Important selected state */
 .badge.important{
  background:#fff!important;
  color:#151515!important;
- border-color:#cfcfcc!important;
-}
+ border-color:#cfcfcc!important;}
 .badge.important.on{
  background:#333!important;
  color:#fff!important;
- border-color:#333!important;
-}
+ border-color:#333!important;}
 
 
 /* Min 5.9 — centralized visible version label */
@@ -465,8 +415,7 @@ header.top button,header.top .btn{
  margin-left:4px!important;
  vertical-align:middle!important;
  letter-spacing:.1px!important;
- white-space:nowrap!important;
-}
+ white-space:nowrap!important;}
 header.top .app-version{color:#bdbdbd!important}
 
 
@@ -493,12 +442,6 @@ body.photo-viewer-open{overflow:hidden!important}
 #bookForm.editing .save{font-weight:700}
 #travelDetailModal{z-index:80}#travelDetailModal .sheet{position:relative;z-index:81}</style>
 <meta name="theme-color" content="#090a0c">
-<!-- Min 7.8 PWA support -->
-<link rel="manifest" href="./manifest.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Min's Note">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
 </head>
 <body><div class="app">
 <header class="top"><div style="display:flex;align-items:center;gap:12px"><div><div class="brand">Min's Note <span id="appVersion" class="app-version"></span></div><div class="sub">Simply Yours.</div></div><div class="data-tools"><button class="data-btn" id="exportAll" type="button">저장</button><button class="data-btn" id="importAll" type="button">복원</button><input id="restoreFile" type="file" accept="application/json,.json" hidden></div></div><div class="tabs"><button class="tab on" data-view="memoView">메모장</button><button class="tab" data-view="carView">차계부</button><button class="tab" disabled>＋</button></div></header>
@@ -940,11 +883,11 @@ document.querySelectorAll('[data-open="golfView"]').forEach(btn=>btn.addEventLis
 let editingGolfId=null,golfDetailId=null;
 async function showGolfDetail(id){const r=(await storeAll('golf')).find(x=>x.id===id);if(!r)return;golfDetailId=id;$('#golfDetailTitle').textContent=r.course||'골프 기록';const diff=Number(r.totalScore)-Number(r.totalPar);const holes=(r.holes||[]).map((h,i)=>`${i+1}H · PAR ${h.par} · ${h.score}타 · ${Number(h.score)-Number(h.par)>0?'+':''}${Number(h.score)-Number(h.par)}`).join('\n');$('#golfDetailContent').textContent=`${displayDate(r.date)}\n${r.partners?'동반자 · '+r.partners+'\n':''}PAR ${r.totalPar} · ${r.totalScore}타 · ${diff>0?'+':''}${diff}\n\n${holes}`;$('#golfDetailModal').classList.add('on')}
 function closeGolfDetail(){golfDetailId=null;$('#golfDetailModal').classList.remove('on')}$('#golfDetailClose').onclick=closeGolfDetail;$('#golfDetailModal').onclick=e=>{if(e.target===$('#golfDetailModal'))closeGolfDetail()};
-$('#golfDetailEdit').onclick=async()=>{const r=(await storeAll('golf')).find(x=>x.id===golfDetailId);if(!r)return;editingGolfId=r.id;$('#golfDate').value=r.date||'';$('#golfCourse').value=r.course||'';$('#golfPartners').value=r.partners||'';golfHoles=(r.holes||[]).map(h=>{const par=Number(h.par)||0;let strokes=Number(h.score);if(!Number.isFinite(strokes))strokes=(Number(h.strokes)||0)+(Number(h.ob)||0)*2+(Number(h.hazard)||0);return{par,strokes:Math.max(0,strokes)}});while(golfHoles.length<18)golfHoles.push({par:0,strokes:0});golfActiveHole=0;$('#golfSave').textContent='수정 저장';closeGolfDetail();renderGolf();window.scrollTo({top:0,behavior:'smooth'})};
+$('#golfDetailEdit').onclick=async()=>{const r=(await storeAll('golf')).find(x=>x.id===golfDetailId);if(!r)return;editingGolfId=r.id;$('#golfDate').value=r.date||'';$('#golfCourse').value=r.course||'';$('#golfPartners').value=r.partners||'';golfHoles=(r.holes||[]).map(h=>{const par=Number(h.par)||0;let strokes=Number(h.score);if(!Number.isFinite(strokes))strokes=Number(h.strokes)||0;return{par,strokes:Math.max(0,strokes)}});while(golfHoles.length<18)golfHoles.push({par:0,strokes:0});golfActiveHole=0;$('#golfSave').textContent='수정 저장';closeGolfDetail();renderGolf();window.scrollTo({top:0,behavior:'smooth'})};
 $('#golfDetailDelete').onclick=async()=>{if(golfDetailId&&confirm('이 라운드 기록을 삭제하시겠습니까?')){await storeDelete('golf',golfDetailId);closeGolfDetail();renderGolfHistory();toast('삭제했습니다.')}};
 async function renderGolfHistory(){const arr=(await storeAll('golf')).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);$('#golfCount').textContent=arr.length+'건';const box=$('#golfHistory');box.innerHTML='';if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 라운드가 없습니다.</div>';return}arr.forEach(r=>{const card=document.createElement('article');card.className='book-list-item';card.innerHTML='<div class="book-list-title"></div>';card.querySelector('.book-list-title').textContent=r.course||'골프 기록';card.onclick=()=>showGolfDetail(r.id);box.appendChild(card)})}
 $('#golfSave').onclick=async()=>{const date=$('#golfDate').value,course=$('#golfCourse').value.trim(),partners=$('#golfPartners').value.trim();if(!date)return toast('날짜를 입력하세요.');if(!course)return toast('골프장을 입력하세요.');if(golfHoles.some(h=>!Number(h.par)))return toast('18홀의 PAR을 모두 입력하세요.');if(golfHoles.some(h=>golfFinal(h)<=0))return toast('18홀의 타수를 모두 기록하세요.');const totalPar=golfHoles.reduce((a,h)=>a+Number(h.par),0),totalScore=golfHoles.reduce((a,h)=>a+golfFinal(h),0),obj={date,course,partners,totalPar,totalScore,holes:golfHoles.map(h=>({par:Number(h.par),score:golfFinal(h),result:golfLabel(h)}))};if(editingGolfId){obj.id=editingGolfId;await storePut('golf',obj)}else await storeAdd('golf',obj);const edited=!!editingGolfId;editingGolfId=null;$('#golfSave').textContent='라운드 저장';await renderGolfHistory();toast(edited?'수정했습니다.':`라운드를 저장했습니다. ${totalScore}타 (${golfDiffText(totalScore-totalPar)})`);golfHoles=Array.from({length:18},()=>({par:0,strokes:0}));golfActiveHole=0;$('#golfCourse').value='';$('#golfPartners').value='';renderGolf()};
-async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'7.8',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
+async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'8.1',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
 async function restoreAllData(file){try{const text=await file.text(),data=JSON.parse(text);if(data.app!=='Min'||!Array.isArray(data.memo)||!Array.isArray(data.carlog))throw new Error('invalid');const books=Array.isArray(data.book)?data.book:[],trips=Array.isArray(data.travel)?data.travel:[],golf=Array.isArray(data.golf)?data.golf:[];if((await storeAll('memo')).length||(await storeAll('carlog')).length||(await storeAll('book')).length||(await storeAll('travel')).length||(await storeAll('golf')).length){if(!confirm('현재 데이터가 모두 지워지고 선택한 저장 파일로 복원됩니다. 계속하시겠습니까?'))return}await clearStore('memo');await clearStore('carlog');await clearStore('book');await clearStore('travel');await clearStore('golf');for(const r of data.memo){const x={...r};delete x.id;await storeAdd('memo',x)}for(const r of data.carlog){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('carlog',x)}for(const r of books){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('book',x)}for(const r of trips){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('travel',x)}for(const r of golf){const x={...r};delete x.id;await storeAdd('golf',x)}await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderGolfHistory()]);toast('전체 데이터를 복원했습니다.')}catch(e){console.error(e);toast('올바른 Min 저장 파일이 아닙니다.')}finally{$('#restoreFile').value=''}}
 $('#exportAll').onclick=exportAllData;$('#importAll').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=e=>{const f=e.target.files[0];if(f)restoreAllData(f)};
 function openPhotoViewer(src){if(!src)return;const v=$('#photoViewer'),im=$('#photoViewerImage');im.src=src;v.classList.add('open');v.setAttribute('aria-hidden','false');document.body.classList.add('photo-viewer-open');v.scrollTop=0}
@@ -955,19 +898,25 @@ document.addEventListener('click',e=>{const im=e.target.closest&&e.target.closes
 (async()=>{try{await openDB();await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap()]);await initTravelMap();showView('homeView')}catch(e){alert('이 브라우저에서는 저장소를 사용할 수 없습니다.')}})();
 </script>
 <script id="app-version-config">
-const APP_VERSION = '7.8';
+const APP_VERSION = '8.1';
 document.addEventListener('DOMContentLoaded',()=>{
   const el=document.getElementById('appVersion');
   if(el) el.textContent='v.'+APP_VERSION;
   document.title="Min's Note "+'v.'+APP_VERSION;
 });
 
-// Mobile browser Back navigation: UI layers only. Data values are never undone.
+
+// Mobile Back navigation v2: explicit UI stack. Never rewinds form values or golf scores.
 let minNavApplying=false;
-function minNavState(kind,extra={}){return Object.assign({minNote:true,kind},extra)}
-function minNavPush(kind,extra={}){
+let minNavStack=[{kind:'home'}];
+
+function minNavPush(entry){
  if(minNavApplying)return;
- history.pushState(minNavState(kind,extra),'');
+ const prev=minNavStack[minNavStack.length-1];
+ const same=prev && JSON.stringify(prev)===JSON.stringify(entry);
+ if(same)return;
+ minNavStack.push(entry);
+ history.pushState({minNote:true,depth:minNavStack.length-1},'');
 }
 function minNavCloseLayers(){
  closePhotoViewer();
@@ -979,120 +928,134 @@ function minNavCloseLayers(){
  $('#travelModal')?.classList.remove('on');
  $('#golfDetailModal')?.classList.remove('on');
 }
-function minNavCurrentView(){
- const v=document.querySelector('.view.on'); return v?v.id:'homeView';
-}
-function minNavApply(st){
+async function minNavRender(entry){
  minNavApplying=true;
  minNavCloseLayers();
- if(!st||!st.minNote||st.kind==='home'){
+ try{
+  if(!entry||entry.kind==='home'){
    showView('homeView');
    if($('#travelDetail')){$('#travelDetail').style.display='none';$('#travelAreaCards').style.display='grid'}
    currentTravelArea=null;
- }else if(st.kind==='view'){
-   showView(st.view||'homeView');
- }else if(st.kind==='travelArea'){
-   showView('travelView');
-   openTravelArea(st.area);
- }else if(st.kind==='memoDetail'){
-   showView('memoView'); showDetail(st.record);
- }else if(st.kind==='carDetail'){
-   showView('carView'); showCarDetail(st.id);
- }else if(st.kind==='bookDetail'){
-   showView('bookView'); showBookDetail(st.id);
- }else if(st.kind==='travelRecord'){
-   showView('travelView'); openTravelArea(st.area).then(()=>openTravel(st.region,st.name));
- }else if(st.kind==='travelDetail'){
-   showView('travelView'); openTravelArea(st.area).then(()=>openTravel(st.region,st.name).then(()=>showTravelDetail(st.id)));
- }else if(st.kind==='golfDetail'){
-   showView('golfView'); showGolfDetail(st.id);
+  }else if(entry.kind==='view'){
+   showView(entry.view);
+   if(entry.view==='travelView'&&$('#travelDetail')){
+    $('#travelDetail').style.display='none';$('#travelAreaCards').style.display='grid';currentTravelArea=null;
+   }
+  }else if(entry.kind==='travelArea'){
+   showView('travelView'); await openTravelArea(entry.area);
+  }else if(entry.kind==='memoDetail'){
+   showView('memoView');
+   const r=(await storeAll('memo')).find(x=>x.id===entry.id);
+   if(r)showDetail(r);
+  }else if(entry.kind==='carDetail'){
+   showView('carView'); await showCarDetail(entry.id);
+  }else if(entry.kind==='bookDetail'){
+   showView('bookView'); await showBookDetail(entry.id);
+  }else if(entry.kind==='golfDetail'){
+   showView('golfView'); await showGolfDetail(entry.id);
+  }else if(entry.kind==='travelRecords'){
+   showView('travelView'); await openTravelArea(entry.area); await openTravel(entry.region,entry.name);
+  }else if(entry.kind==='travelDetail'){
+   showView('travelView'); await openTravelArea(entry.area); await openTravel(entry.region,entry.name); await showTravelDetail(entry.id);
+  }
+ }finally{
+  setTimeout(()=>{minNavApplying=false},0);
  }
- setTimeout(()=>{minNavApplying=false},0);
 }
-history.replaceState(minNavState('home'),'');
-window.addEventListener('popstate',e=>minNavApply(e.state));
+function minNavBack(){
+ if(minNavStack.length>1)history.back();
+ else minNavRender({kind:'home'});
+}
+history.replaceState({minNote:true,depth:0},'');
 
-// Main menu -> browser history entry.
-document.querySelectorAll('[data-open]').forEach(b=>{
- b.addEventListener('click',()=>minNavPush('view',{view:b.dataset.open}));
-});
-
-// Travel province/city hierarchy.
-document.querySelectorAll('.province-card').forEach(b=>{
- b.addEventListener('click',()=>minNavPush('travelArea',{area:b.dataset.area}));
-});
-const minTravelBack=$('#travelAreaBack');
-if(minTravelBack)minTravelBack.addEventListener('click',e=>{
- if(!minNavApplying){e.preventDefault();e.stopImmediatePropagation();history.back()}
-},true);
-
-// Dynamic record/detail openings: capture the state after the existing click target is known.
-document.addEventListener('click',e=>{
- if(minNavApplying)return;
- const item=e.target.closest('.book-list-item,.memo-card');
- if(!item)return;
- setTimeout(()=>{
-   if($('#carDetailModal')?.classList.contains('on') && carDetailId) minNavPush('carDetail',{id:carDetailId});
-   else if($('#bookDetailModal')?.classList.contains('on') && bookDetailId) minNavPush('bookDetail',{id:bookDetailId});
-   else if($('#golfDetailModal')?.classList.contains('on') && golfDetailId) minNavPush('golfDetail',{id:golfDetailId});
- },0);
-});
-
-// Memo detail button is inside a card, so record the opened detail explicitly.
-document.addEventListener('click',e=>{
- if(minNavApplying)return;
- if(e.target?.textContent==='상세' && e.target.closest('.memo-card')){
-   setTimeout(async()=>{
-     if($('#detailModal')?.classList.contains('on') && memoDetailId){
-       const r=(await storeAll('memo')).find(x=>x.id===memoDetailId);
-       if(r)minNavPush('memoDetail',{record:r});
-     }
-   },0);
+window.addEventListener('popstate',async e=>{
+ if(minNavStack.length>1)minNavStack.pop();
+ await minNavRender(minNavStack[minNavStack.length-1]||{kind:'home'});
+ // Keep a browser-history guard while the app is open so Back cannot close Chrome from an internal screen.
+ if(minNavStack.length===1){
+   history.pushState({minNote:true,guard:true},'');
  }
 });
 
-// Travel modal/detail state is captured from the actual selected region.
+// Start with one guard entry. The first Back from Home stays in the app.
+history.pushState({minNote:true,guard:true},'');
+
+// Main cards.
+document.querySelectorAll('[data-open]').forEach(b=>{
+ b.addEventListener('click',()=>{
+  if(minNavApplying)return;
+  minNavPush({kind:'view',view:b.dataset.open});
+ });
+});
+
+// Memo/Car/Book/Golf detail: push history at the function that actually opens the detail.
+const _minShowDetail=showDetail;
+showDetail=function(r){
+ _minShowDetail(r);
+ if(!minNavApplying && r?.id)minNavPush({kind:'memoDetail',id:r.id});
+};
+const _minShowCarDetail=showCarDetail;
+showCarDetail=async function(id){
+ await _minShowCarDetail(id);
+ if(!minNavApplying && id)minNavPush({kind:'carDetail',id});
+};
+const _minShowBookDetail=showBookDetail;
+showBookDetail=async function(id){
+ await _minShowBookDetail(id);
+ if(!minNavApplying && id)minNavPush({kind:'bookDetail',id});
+};
+const _minShowGolfDetail=showGolfDetail;
+showGolfDetail=async function(id){
+ await _minShowGolfDetail(id);
+ if(!minNavApplying && id)minNavPush({kind:'golfDetail',id});
+};
+
+// Travel hierarchy: wrap the actual navigation functions so every level is deterministic.
+const _minOpenTravelArea=openTravelArea;
+openTravelArea=async function(area){
+ await _minOpenTravelArea(area);
+ if(!minNavApplying)minNavPush({kind:'travelArea',area});
+};
 const _minOpenTravel=openTravel;
 openTravel=async function(region,displayName=legacyRegionName(region)){
  await _minOpenTravel(region,displayName);
- if(!minNavApplying)minNavPush('travelRecord',{area:currentTravelArea,region,name:displayName});
+ if(!minNavApplying)minNavPush({kind:'travelRecords',area:currentTravelArea,region,name:displayName});
 };
 const _minShowTravelDetail=showTravelDetail;
 showTravelDetail=async function(id){
  await _minShowTravelDetail(id);
- if(!minNavApplying)minNavPush('travelDetail',{area:currentTravelArea,region:currentRegion,name:travelDisplayName,id});
+ if(!minNavApplying)minNavPush({kind:'travelDetail',area:currentTravelArea,region:currentRegion,name:travelDisplayName,id});
 };
 
-// Close/X buttons use browser Back when the layer came from app navigation.
+// Internal back/close controls follow the same stack as Android/Chrome Back.
 [
- ['#detailClose','#detailModal'],['#carDetailClose','#carDetailModal'],
- ['#bookDetailClose','#bookDetailModal'],['#travelDetailClose','#travelDetailModal'],
- ['#travelClose','#travelModal'],['#golfDetailClose','#golfDetailModal']
-].forEach(([btn,modal])=>{
- const b=$(btn);
- if(b)b.addEventListener('click',e=>{
-   if(!minNavApplying && $(modal)?.classList.contains('on')){
-     e.preventDefault();e.stopImmediatePropagation();history.back();
-   }
+ '#detailClose','#carDetailClose','#bookDetailClose','#travelDetailClose',
+ '#travelClose','#golfDetailClose','#travelAreaBack'
+].forEach(sel=>{
+ const b=$(sel); if(!b)return;
+ b.addEventListener('click',e=>{
+  if(minNavApplying)return;
+  e.preventDefault();e.stopImmediatePropagation();minNavBack();
  },true);
 });
-
-// Home/back buttons inside feature views use browser Back instead of exiting the HTML.
 document.querySelectorAll('.view .back-home').forEach(b=>{
  if(b.id==='travelAreaBack')return;
  b.addEventListener('click',e=>{
-   if(!minNavApplying && minNavCurrentView()!=='homeView'){
-     e.preventDefault();e.stopImmediatePropagation();history.back();
-   }
+  if(minNavApplying)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  while(minNavStack.length>1)minNavStack.pop();
+  history.replaceState({minNote:true,depth:0},'');
+  history.pushState({minNote:true,guard:true},'');
+  minNavRender({kind:'home'});
  },true);
 });
 </script>
 
+
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .catch(err => console.error('Service Worker registration failed:', err));
+    navigator.serviceWorker.register('./sw.js').catch(console.error);
   });
 }
 </script>
