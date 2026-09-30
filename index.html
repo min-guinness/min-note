@@ -3,20 +3,12 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Min's Note</title>
-<link rel="manifest" href="./manifest.webmanifest">
-<meta name="theme-color" content="#f5f6f8">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Min's Note">
-<link rel="apple-touch-icon" href="./icon-192.png">
-
 <style>
 :root{--bg:#f5f6f8;--card:#fff;--ink:#15171a;--muted:#747a84;--line:#e7e9ed;--accent:#17191d;--danger:#9a3c35}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}.app{max-width:620px;margin:auto;min-height:100vh;padding-bottom:92px}.top{position:sticky;top:0;z-index:10;background:rgba(245,246,248,.94);backdrop-filter:blur(12px);padding:18px 18px 12px;border-bottom:1px solid var(--line)}.brand{font-size:28px;font-weight:700;letter-spacing:-1px}.sub{font-size:13px;color:var(--muted);margin-top:2px}.tabs{display:flex;gap:8px;margin-top:16px;overflow-x:auto}.tab{border:0;background:#e9ebef;color:#686d76;padding:9px 15px;border-radius:999px;font-weight:600;white-space:nowrap}.tab.on{background:var(--accent);color:#fff}main{padding:16px}.view{display:none}.view.on{display:block}.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 5px 20px rgba(0,0,0,.035)}.panel h2{font-size:17px;margin:0 0 15px}.field{margin:13px 0}.label{display:block;font-size:13px;font-weight:600;margin:0 0 7px}.input,.textarea{width:100%;border:1px solid #dfe2e7;border-radius:13px;padding:0 14px;font-size:16px;background:#fff;outline:none;font-family:inherit}.input{height:48px}.textarea{min-height:130px;padding:13px 14px;resize:vertical;line-height:1.55}.input:focus,.textarea:focus{border-color:#8d929a}.date-row{display:grid;grid-template-columns:1fr 72px;gap:8px}.today{border:0;border-radius:13px;background:#eceef1;font-weight:600;font-size:14px}.photo-box{height:190px;border:1.5px dashed #ccd0d6;border-radius:16px;overflow:hidden;position:relative;background:#f8f9fa;display:flex;align-items:center;justify-content:center}.photo-box img{width:100%;height:100%;object-fit:cover;display:none}.photo-label{color:#6f7580;font-weight:600;text-align:center;font-size:14px}.photo-label small{display:block;font-weight:500;margin-top:5px}.photo-box input{position:absolute;inset:0;opacity:0;width:100%;height:100%}.save{width:100%;height:52px;border:0;border-radius:15px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;margin-top:8px}.save:active{transform:scale(.99)}.section-title{display:flex;justify-content:space-between;align-items:end;margin:24px 2px 10px}.section-title h2{font-size:18px;margin:0}.count{font-size:12px;color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:35px 10px}.records{display:grid;gap:12px}.record,.memo-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.record-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#eee;display:block}.record-body,.memo-body{padding:14px}.record-top,.memo-top{display:flex;justify-content:space-between;gap:12px}.record-title,.memo-title{font-weight:600;font-size:17px;min-width:0}.record-date,.memo-date{color:var(--muted);font-size:13px;white-space:nowrap}.place{color:#626873;font-size:14px;margin-top:5px}.meta{display:flex;justify-content:space-between;gap:10px;margin-top:13px;padding-top:12px;border-top:1px solid #eff0f2;font-weight:600}.money{font-size:16px}.km{font-size:14px;color:#555b64}.memo-preview{margin-top:8px;color:#555b64;font-size:14px;line-height:1.55;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.actions{display:flex;justify-content:flex-end;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid #eff0f2}.badge{border:1px solid #dfe2e7;background:#f5f6f8;color:#454a52;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:600}.badge.delete{color:var(--danger)}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#17191d;color:#fff;padding:11px 17px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;bottom:34px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:50;display:none;align-items:flex-end;justify-content:center}.modal.on{display:flex}.sheet{width:min(620px,100%);max-height:86vh;overflow:auto;background:#fff;border-radius:22px 22px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom))}.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.sheet-head h3{margin:0;font-size:19px}.close{border:0;background:#eceef1;border-radius:999px;width:34px;height:34px;font-size:18px}.detail-text{white-space:pre-wrap;line-height:1.65;margin-top:16px;color:#34383e}.detail-date{margin-top:16px;color:var(--muted);font-size:13px}.cancel{width:100%;height:48px;border:0;border-radius:14px;background:#eceef1;color:#333;font-size:15px;font-weight:600;margin-top:8px}.memo-list-head{margin-top:4px}.memo-add{width:38px;height:38px;border:0;border-radius:50%;background:var(--accent);color:#fff;font-size:24px;line-height:1;font-weight:500;display:flex;align-items:center;justify-content:center}.memo-card .memo-body{display:flex;align-items:center;gap:10px;padding:12px 14px}.memo-card .memo-title{flex:1;font-size:15px;font-weight:600;line-height:1.45;word-break:break-word}.memo-card .actions{margin:0;padding:0;border:0;flex:none;gap:5px}.memo-card .badge{padding:5px 8px;font-size:11px}.badge.important.on{background:#17191d;color:#fff;border-color:#17191d}.memo-card.important{border-color:#aeb2b8}@media(max-width:420px){.memo-card .memo-body{align-items:flex-start;flex-wrap:wrap}.memo-card .memo-title{flex-basis:100%}.memo-card .actions{width:100%;justify-content:flex-end}}@media(min-width:700px){.app{padding-top:10px}.modal{align-items:center}.sheet{border-radius:22px;max-height:80vh}}
 .data-tools{display:flex;gap:7px;margin-left:auto}.data-btn{border:1px solid #d9dce1;background:#fff;color:#34383e;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:600}.data-btn:active{transform:scale(.98)}
 
-.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}.tool-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:20px;text-align:left;min-height:126px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 14px rgba(0,0,0,.025)}.tool-card:active{transform:scale(.99)}.tool-icon{width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:#17191d}.tool-icon svg{width:26px;height:26px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.tool-name{font-size:18px;font-weight:600}.tool-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}.home-intro{padding:22px 2px 12px}.home-copy{color:var(--muted);font-size:14px;margin:0;line-height:1.6}.feature-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}.back-home{border:1px solid #dfe2e7;background:#fff;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:600}.feature-title{font-size:20px;font-weight:600}.tabs{display:none!important}@media(max-width:420px){.home-grid{grid-template-columns:1fr}}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}.tool-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:20px;text-align:left;min-height:126px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 14px rgba(0,0,0,.025)}.tool-card:active{transform:scale(.99)}.tool-icon{width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:#17191d}.tool-icon svg{width:26px;height:26px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.tool-name{font-size:18px;font-weight:600}.tool-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}.home-intro{padding:22px 2px 12px}.home-copy{color:var(--muted);font-size:14px;margin:0;line-height:1.6}.feature-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}.back-home{border:1px solid #dfe2e7;background:#fff;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:600}.feature-title{font-size:20px;font-weight:600}.tabs{display:none!important}@media(max-width:420px){.home-grid{grid-template-columns:1fr 1fr;gap:10px}.tool-card{min-height:118px;padding:16px}}
 
 .travel-map{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px}.travel-map svg{display:block;width:100%;height:auto;max-height:65vh}.travel-map .region{fill:#fff;stroke:#17191d;stroke-width:1.4;cursor:pointer;transition:.15s}.travel-map .region.visited{fill:#17191d}.travel-map .region:active{opacity:.65}.travel-map .region-label{font-size:8.5px;font-weight:600;fill:#17191d;stroke:#fff;stroke-width:1.8px;paint-order:stroke;stroke-linejoin:round;text-anchor:middle;dominant-baseline:central;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .12s}.travel-map .region-label.zoom-visible{opacity:1;visibility:visible}.travel-map .region-label.visited-label{fill:#fff;stroke:#17191d;stroke-width:1.4px}.map-toolbar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}.map-toolbar span{font-size:11px;color:var(--muted);text-align:center}.travel-map svg{transform-origin:0 0;transition:none;will-change:transform;user-select:none;-webkit-user-select:none}.map-note{font-size:12px;color:var(--muted);line-height:1.5;margin:10px 2px 0}.trip-list{display:grid;gap:10px;margin-top:12px}.trip-item{border:1px solid var(--line);border-radius:14px;padding:12px}.trip-period{font-size:12px;color:var(--muted);font-weight:600}.trip-text{font-size:14px;line-height:1.55;margin-top:6px;white-space:pre-wrap}.trip-photo{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin-top:9px}.period-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.travel-region-name{font-size:13px;color:var(--muted);margin-top:3px}
 .province-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.province-card{min-height:82px;border:1px solid var(--line);border-radius:17px;background:#fff;padding:13px 10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left}.province-card:active{transform:scale(.98)}.province-name{font-size:17px;font-weight:600}.province-count{font-size:11px;color:var(--muted);font-weight:600}.detail-map-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}#travelAreaTitle{flex:1}.travel-map #mapViewport{overflow:hidden;position:relative;max-height:70vh;touch-action:none;overscroll-behavior:contain}.travel-map #koreaMap{transform-origin:0 0;will-change:transform}.travel-map #koreaMap{display:block;width:100%;height:auto;max-height:70vh}.travel-map .detail-region{fill:#fff;stroke:#17191d;stroke-width:1.2;cursor:pointer}.travel-map .detail-region.visited{fill:#17191d}.travel-map .detail-label{font-size:3.05px;font-weight:600;fill:#17191d;stroke:#fff;stroke-width:2.4px;paint-order:stroke;stroke-linejoin:round;text-anchor:middle;dominant-baseline:central;pointer-events:none;text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased}.travel-map .detail-label.visited-label{fill:#fff;stroke:#17191d}@media(max-width:390px){.province-grid{grid-template-columns:repeat(2,1fr)}}.memo-search-wrap{margin:0 0 12px;position:relative}.memo-search{width:100%;height:44px;border:1px solid #dfe2e7;border-radius:14px;background:#fff;padding:0 42px 0 14px;font:inherit;font-size:14px;font-weight:400;outline:none}.memo-search:focus{border-color:#8d929a}.memo-search-clear{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:#7a7f87;font-size:18px;display:none;align-items:center;justify-content:center}.memo-search-clear.show{display:flex}
@@ -440,14 +432,47 @@ body.photo-viewer-open{overflow:hidden!important}
 .book-detail-content{white-space:pre-wrap;word-break:break-word;line-height:1.65;color:#151515}
 .book-detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid #dededb}
 #bookForm.editing .save{font-weight:700}
-#travelDetailModal{z-index:80}#travelDetailModal .sheet{position:relative;z-index:81}</style>
+#travelDetailModal{z-index:80}#travelDetailModal .sheet{position:relative;z-index:81}
+/* Diary */
+.diary-calendar{background:#fff;border:1px solid #dededb;border-radius:18px;padding:14px;min-height:calc(100vh - 190px)}
+.diary-cal-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin-bottom:14px}
+.diary-cal-head button{border:1px solid #dededb;background:#fff;border-radius:10px;padding:9px 11px;font-weight:650}
+.diary-month{text-align:center;font-size:19px;font-weight:750}.diary-today-row{text-align:center;margin:-4px 0 12px}
+#diaryToday{border:1px solid #dededb;background:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:650}
+.diary-week,.diary-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.diary-week div{text-align:center;font-size:11px;color:#777;padding:5px 0}
+.diary-day{position:relative;aspect-ratio:1/1;min-height:44px;border:1px solid transparent;background:transparent;border-radius:12px;font-size:13px}
+.diary-day.other{color:#bbb}.diary-day.today{font-weight:400!important;border:2px solid #9a9a96!important}.diary-day.selected{border:2px solid #151515!important;background:#fafafa!important}
+.diary-dot{position:absolute;left:50%;bottom:6px;width:5px;height:5px;border-radius:50%;background:#151515;transform:translateX(-50%)}
+.diary-selected-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 2px 10px}
+.diary-selected-title{font-size:16px;font-weight:750}.diary-add{width:34px;height:34px;border:1px solid #dededb;background:#fff;border-radius:50%;font-size:20px}
+#diaryList{padding-bottom:8px}.diary-item{display:block;width:100%;text-align:left;border:1px solid #dededb;background:#fff;border-radius:14px;padding:14px;margin-bottom:8px}
+.diary-item-title{font-weight:700}.diary-item-date{font-size:11px;color:#777;margin-top:4px}
+.diary-detail-image{display:none;width:100%;max-height:48vh;object-fit:contain;background:#f3f3f1;border:1px solid #dededb;border-radius:12px;margin-bottom:14px;cursor:zoom-in}
+</style>
 <meta name="theme-color" content="#090a0c">
 </head>
 <body><div class="app">
 <header class="top"><div style="display:flex;align-items:center;gap:12px"><div><div class="brand">Min's Note <span id="appVersion" class="app-version"></span></div><div class="sub">Simply Yours.</div></div><div class="data-tools"><button class="data-btn" id="exportAll" type="button">저장</button><button class="data-btn" id="importAll" type="button">복원</button><input id="restoreFile" type="file" accept="application/json,.json" hidden></div></div><div class="tabs"><button class="tab on" data-view="memoView">메모장</button><button class="tab" data-view="carView">차계부</button><button class="tab" disabled>＋</button></div></header>
 <main>
-<section id="homeView" class="view on"><div class="home-intro"><div class="home-copy">민기님, 안녕하세요?</div></div><div class="home-grid"><button class="tool-card" type="button" data-open="memoView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h10a2 2 0 0 1 2 2v3"/><path d="M4 4v16h10"/><path d="M14.5 17.5 20 12l2 2-5.5 5.5-3 1z"/></svg></div><div><div class="tool-name">메모</div><div class="tool-desc">빠르게 기록하고 정리합니다.</div></div></button><button class="tool-card" type="button" data-open="carView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16h14l-1.4-6.1A2.5 2.5 0 0 0 15.2 8H8.8a2.5 2.5 0 0 0-2.4 1.9z"/><path d="M4 16v3M20 16v3M6 19h2M16 19h2"/><circle cx="8" cy="15.5" r="1"/><circle cx="16" cy="15.5" r="1"/></svg></div><div><div class="tool-name">차량</div><div class="tool-desc">차량 관련 기록을 남깁니다.</div></div></button><button class="tool-card" type="button" data-open="bookView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg></div><div><div class="tool-name">독서</div><div class="tool-desc">읽은 책과 생각을 기록합니다.</div></div></button><button class="tool-card" type="button" data-open="travelView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11z"/><circle cx="12" cy="10" r="2"/></svg></div><div><div class="tool-name">여행</div><div class="tool-desc">다녀온 곳을 지도에 채워갑니다.</div></div></button><button class="tool-card" type="button" data-open="golfView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 21V4"/><path d="M7 4h8l-2.5 3L15 10H7"/><path d="M4 21h8"/></svg></div><div><div class="tool-name">골프</div><div class="tool-desc">라운드 타수를 기록합니다.</div></div></button></div></section>
+<section id="homeView" class="view on"><div class="home-intro"><div class="home-copy">민기님, 안녕하세요?</div></div><div class="home-grid">
+<button class="tool-card" type="button" data-open="memoView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h10a2 2 0 0 1 2 2v3"/><path d="M4 4v16h10"/><path d="M14.5 17.5 20 12l2 2-5.5 5.5-3 1z"/></svg></div><div><div class="tool-name">메모</div><div class="tool-desc">빠르게 기록하고 정리합니다.</div></div></button>
+<button class="tool-card" type="button" data-open="diaryView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8 14h3M8 17h6"/></svg></div><div><div class="tool-name">일기</div><div class="tool-desc">날짜별 일상을 기록합니다.</div></div></button>
+<button class="tool-card" type="button" data-open="bookView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg></div><div><div class="tool-name">독서</div><div class="tool-desc">읽은 책과 생각을 기록합니다.</div></div></button>
+<button class="tool-card" type="button" data-open="carView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16h14l-1.4-6.1A2.5 2.5 0 0 0 15.2 8H8.8a2.5 2.5 0 0 0-2.4 1.9z"/><path d="M4 16v3M20 16v3M6 19h2M16 19h2"/><circle cx="8" cy="15.5" r="1"/><circle cx="16" cy="15.5" r="1"/></svg></div><div><div class="tool-name">차량</div><div class="tool-desc">차량 관련 기록을 남깁니다.</div></div></button>
+<button class="tool-card" type="button" data-open="travelView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11z"/><circle cx="12" cy="10" r="2"/></svg></div><div><div class="tool-name">여행</div><div class="tool-desc">다녀온 곳을 지도에 채워갑니다.</div></div></button>
+<button class="tool-card" type="button" data-open="golfView"><div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 21V4"/><path d="M7 4h8l-2.5 3L15 10H7"/><path d="M4 21h8"/></svg></div><div><div class="tool-name">골프</div><div class="tool-desc">라운드 타수를 기록합니다.</div></div></button>
+</div></section>
 <section id="memoView" class="view"><div class="feature-head"><button class="back-home" type="button">← 홈</button><div class="feature-title">메모</div></div><div class="section-title memo-list-head"><h2>메모</h2><div style="display:flex;align-items:center;gap:10px"><span class="count" id="memoCount">0건</span><button class="memo-add" id="memoAdd" type="button" aria-label="메모 추가">＋</button></div></div><div class="memo-search-wrap"><input id="memoSearch" class="memo-search" type="search" placeholder="메모 검색" autocomplete="off" aria-label="메모 검색"><button id="memoSearchClear" class="memo-search-clear" type="button" aria-label="검색어 지우기">×</button></div><section id="memos" class="records"><div class="empty">아직 저장된 메모가 없습니다.<br>＋를 눌러 메모를 추가하세요.</div></section></section>
+<section id="diaryView" class="view"><div class="feature-head"><button class="back-home" type="button">← 홈</button><div class="feature-title">일기</div></div>
+<section class="diary-calendar">
+ <div class="diary-cal-head"><button id="diaryPrev" type="button">‹ 이전달</button><div id="diaryMonth" class="diary-month"></div><button id="diaryNext" type="button">다음달 ›</button></div>
+ <div class="diary-today-row"><button id="diaryToday" type="button">오늘</button></div>
+ <div class="diary-week"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
+ <div id="diaryDays" class="diary-days"></div>
+ <div class="diary-selected-head"><div id="diarySelectedTitle" class="diary-selected-title"></div><button id="diaryAdd" class="diary-add" type="button" aria-label="일기 추가">＋</button></div>
+ <div id="diaryList"><div class="empty">날짜를 선택하세요.</div></div>
+</section></section>
 <section id="carView" class="view"><div class="feature-head"><button class="back-home" type="button">← 홈</button><div class="feature-title">차량</div></div><section class="panel"><h2>차계부 기록</h2><form id="carForm"><div class="field"><span class="label">사진</span><label class="photo-box"><img id="preview"><span class="photo-label" id="photoText">사진 등록<small>갤러리에서 사진 선택</small></span><input id="photo" type="file" accept="image/*"></label></div><div class="field"><div class="car-content-head"><span class="label">내용</span><button class="content-add" id="contentAdd" type="button" aria-label="내용 추가">＋</button></div><div class="car-content-list" id="carContentList"><div class="car-content-row"><input class="input car-content-input" maxlength="80" placeholder="예: 엔진오일 교환" required><button class="content-remove" type="button" aria-label="내용 삭제">×</button></div></div></div><div class="field"><label class="label" for="place">장소</label><input class="input" id="place" maxlength="80" placeholder="예: 서비스센터"></div><div class="field"><label class="label" for="amount">금액</label><input class="input" id="amount" type="text" inputmode="numeric" placeholder="0원"></div><div class="field"><label class="label" for="mileage">주행거리</label><input class="input" id="mileage" type="text" inputmode="numeric" placeholder="0 km"></div><div class="field"><label class="label" for="date">날짜</label><div class="date-row"><input class="input" id="date" type="date" required><button class="today" id="today" type="button">오늘</button></div></div><button class="save" type="submit">저장</button></form></section><div class="section-title"><h2>기록</h2><span class="count" id="count">0건</span></div><section id="records" class="records"><div class="empty">아직 저장된 기록이 없습니다.</div></section></section>
 
 <section id="bookView" class="view">
@@ -529,11 +554,17 @@ body.photo-viewer-open{overflow:hidden!important}
 <div class="modal" id="memoModal"><div class="sheet"><div class="sheet-head"><h3 id="memoFormTitle">메모 추가</h3><button class="close" id="memoClose" type="button">×</button></div><form id="memoForm"><div class="field"><label class="label" for="memoTitle">제목</label><input class="input" id="memoTitle" maxlength="120" placeholder="제목을 입력하세요." required></div><div class="field"><label class="label" for="memoContent">내용</label><textarea class="textarea" id="memoContent" maxlength="5000" placeholder="내용을 입력하세요." autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" data-form-type="other"></textarea></div><button class="save" id="memoSave" type="submit">저장</button><button class="cancel" id="memoCancel" type="button" style="display:none">수정 취소</button></form></div></div>
 <div class="modal" id="detailModal"><div class="sheet"><div class="sheet-head"><h3 id="detailTitle"></h3><button class="close" id="detailClose">×</button></div><div class="detail-text" id="detailText"></div></div></div>
 
+<div class="modal" id="diaryModal"><div class="sheet"><div class="sheet-head"><h3 id="diaryFormTitle">일기 작성</h3><button class="close" id="diaryClose" type="button">×</button></div><form id="diaryForm">
+<div class="field"><label class="label" for="diaryTitle">제목</label><input class="input" id="diaryTitle" maxlength="120" placeholder="제목을 입력하세요." required></div>
+<div class="field"><span class="label">사진</span><label class="photo-box"><img id="diaryPreview"><span class="photo-label" id="diaryPhotoText">사진 등록<small>갤러리에서 사진 선택</small></span><input id="diaryPhoto" type="file" accept="image/*"></label></div>
+<div class="field"><label class="label" for="diaryContent">내용</label><textarea class="textarea" id="diaryContent" maxlength="5000" placeholder="오늘의 기록을 남겨보세요."></textarea></div>
+<button class="save" type="submit">저장</button><button class="cancel" id="diaryCancel" type="button" style="display:none">수정 취소</button></form></div></div>
+<div class="modal" id="diaryDetailModal"><div class="sheet"><div class="sheet-head"><h3 id="diaryDetailTitle"></h3><button class="close" id="diaryDetailClose" type="button">×</button></div><div class="book-detail-scroll"><img id="diaryDetailImage" class="diary-detail-image" alt="일기 사진"><div id="diaryDetailContent" class="book-detail-content"></div></div><div class="book-detail-actions"><button id="diaryDetailEdit" type="button">수정</button><button id="diaryDetailDelete" class="delete" type="button">삭제</button></div></div></div>
 <div class="modal" id="travelModal"><div class="sheet"><div class="sheet-head"><div><h3 id="travelTitle">여행 기록</h3><div class="travel-region-name" id="travelRegion"></div></div><button class="close" id="travelClose" type="button">×</button></div><form id="travelForm"><div class="field"><span class="label">사진</span><label class="photo-box"><img id="travelPreview"><span class="photo-label" id="travelPhotoText">사진 등록<small>갤러리에서 사진 선택</small></span><input id="travelPhoto" type="file" accept="image/*"></label></div><div class="field"><span class="label">기간</span><div class="period-row"><input class="input" id="travelStart" type="date" required><input class="input" id="travelEnd" type="date" required></div></div><div class="field"><label class="label" for="travelContent">내용</label><textarea class="textarea" id="travelContent" maxlength="3000" placeholder="여행 기록을 입력하세요."></textarea></div><button class="save" type="submit">여행 기록 저장</button></form><div class="section-title" style="margin-top:22px"><h2>기록</h2></div><div id="tripList" class="trip-list"></div></div></div>
 <script>
 const $=s=>document.querySelector(s);let db,selectedPhoto=null,selectedBookPhoto=null,editingMemoId=null,selectedTravelPhoto=null,currentRegion=null;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1600)}function digits(v){return String(v||'').replace(/\D/g,'')}function comma(v){const n=digits(v);return n?Number(n).toLocaleString('ko-KR'):''}function bindMoney(el,suffix){el.addEventListener('focus',()=>{el.value=digits(el.value)});el.addEventListener('input',()=>{el.value=comma(el.value)});el.addEventListener('blur',()=>{const n=comma(el.value);el.value=n?n+' '+suffix:''})}bindMoney($('#amount'),'원');bindMoney($('#mileage'),'km');function todayLocal(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}$('#today').onclick=()=>$('#date').value=todayLocal();function displayDate(s){if(!s)return '';const[y,m,d]=s.split('-');return `${y}.${m}.${d}`}
-function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));window.scrollTo({top:0,behavior:'instant'});if(id==='travelView')initTravelMap()}document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>showView(b.dataset.open));document.querySelectorAll('.back-home').forEach(b=>b.onclick=()=>showView('homeView'));
-function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('MinDB',5);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('carlog')){const s=d.createObjectStore('carlog',{keyPath:'id',autoIncrement:true});s.createIndex('date','date')}if(!d.objectStoreNames.contains('memo')){const s=d.createObjectStore('memo',{keyPath:'id',autoIncrement:true});s.createIndex('date','date')}if(!d.objectStoreNames.contains('travel')){const s=d.createObjectStore('travel',{keyPath:'id',autoIncrement:true});s.createIndex('region','region')}if(!d.objectStoreNames.contains('golf')){const s=d.createObjectStore('golf',{keyPath:'id',autoIncrement:true});s.createIndex('date','date')}if(!d.objectStoreNames.contains('book')){d.createObjectStore('book',{keyPath:'id',autoIncrement:true})}};r.onsuccess=()=>{db=r.result;res()};r.onerror=()=>rej(r.error)})}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));window.scrollTo({top:0,behavior:'instant'});if(id==='travelView')initTravelMap();if(id==='diaryView'&&db)renderDiaryCalendar()}document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>showView(b.dataset.open));document.querySelectorAll('.back-home').forEach(b=>b.onclick=()=>showView('homeView'));
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('MinDB',6);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('carlog')){const s=d.createObjectStore('carlog',{keyPath:'id',autoIncrement:true});s.createIndex('date','date')}if(!d.objectStoreNames.contains('memo')){const s=d.createObjectStore('memo',{keyPath:'id',autoIncrement:true});s.createIndex('date','date')}if(!d.objectStoreNames.contains('travel')){const s=d.createObjectStore('travel',{keyPath:'id',autoIncrement:true});s.createIndex('region','region')}if(!d.objectStoreNames.contains('golf')){const s=d.createObjectStore('golf',{keyPath:'id',autoIncrement:true});s.createIndex('date','date')}if(!d.objectStoreNames.contains('book')){d.createObjectStore('book',{keyPath:'id',autoIncrement:true})}if(!d.objectStoreNames.contains('diary')){const s=d.createObjectStore('diary',{keyPath:'id',autoIncrement:true});s.createIndex('date','date')}};r.onsuccess=()=>{db=r.result;res()};r.onerror=()=>rej(r.error)})}
 function storeAdd(name,obj){return new Promise((res,rej)=>{const r=db.transaction(name,'readwrite').objectStore(name).add(obj);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}function storePut(name,obj){return new Promise((res,rej)=>{const r=db.transaction(name,'readwrite').objectStore(name).put(obj);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}function storeAll(name){return new Promise((res,rej)=>{const r=db.transaction(name).objectStore(name).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}function storeDelete(name,id){return new Promise((res,rej)=>{const r=db.transaction(name,'readwrite').objectStore(name).delete(id);r.onsuccess=res;r.onerror=()=>rej(r.error)})}
 function resizeImage(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);img.onload=()=>{const MAX=1800,scale=Math.min(1,MAX/Math.max(img.width,img.height)),W=Math.max(1,Math.round(img.width*scale)),H=Math.max(1,Math.round(img.height*scale)),c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.drawImage(img,0,0,W,H);URL.revokeObjectURL(u);c.toBlob(b=>b?res(b):rej(),'image/jpeg',.86)};img.onerror=()=>{URL.revokeObjectURL(u);rej()};img.src=u})}$('#photo').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{selectedPhoto=await resizeImage(f);$('#preview').src=URL.createObjectURL(selectedPhoto);$('#preview').style.display='block';$('#photoText').style.display='none'}catch{toast('사진을 불러오지 못했습니다.')}};
 function addCarContentRow(value=''){const list=$('#carContentList'),row=document.createElement('div');row.className='car-content-row';row.innerHTML='<input class="input car-content-input" maxlength="80" placeholder="추가 내용"><button class="content-remove" type="button" aria-label="내용 삭제">×</button>';row.querySelector('input').value=value;row.querySelector('.content-remove').onclick=()=>{row.remove();if(!list.querySelector('.car-content-row'))addCarContentRow()};list.appendChild(row);row.querySelector('input').focus()}function resetCarContentRows(){const list=$('#carContentList');list.innerHTML='<div class="car-content-row"><input class="input car-content-input" maxlength="80" placeholder="예: 엔진오일 교환" required><button class="content-remove" type="button" aria-label="내용 삭제">×</button></div>';list.querySelector('.content-remove').onclick=()=>{}}$('#contentAdd').onclick=()=>addCarContentRow();$('#carContentList').querySelector('.content-remove').onclick=()=>{};
@@ -677,7 +708,6 @@ function bindDetailMapGestures(){if(mapGestureBound)return;const vp=$('#mapViewp
  const end=e=>{touches.delete(e.pointerId);if(gestureMoved)suppressClickUntil=Date.now()+220;if(touches.size===1){const a=[...touches.values()][0];lastOne={...a}}else{lastOne=null;lastDist=0;lastMid=null}if(mapZoom<=1.01)resetDetailMapTransform()};vp.addEventListener('pointerup',end);vp.addEventListener('pointercancel',end);
  vp.addEventListener('click',e=>{if(Date.now()<suppressClickUntil){e.preventDefault();e.stopPropagation()}},true)
 }
-async function loadRealMap(){return initTravelMap()}
 async function renderTravelMap(){
  if(!db)return;
  const trips=await storeAll('travel');
@@ -887,24 +917,72 @@ $('#golfDetailEdit').onclick=async()=>{const r=(await storeAll('golf')).find(x=>
 $('#golfDetailDelete').onclick=async()=>{if(golfDetailId&&confirm('이 라운드 기록을 삭제하시겠습니까?')){await storeDelete('golf',golfDetailId);closeGolfDetail();renderGolfHistory();toast('삭제했습니다.')}};
 async function renderGolfHistory(){const arr=(await storeAll('golf')).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);$('#golfCount').textContent=arr.length+'건';const box=$('#golfHistory');box.innerHTML='';if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 라운드가 없습니다.</div>';return}arr.forEach(r=>{const card=document.createElement('article');card.className='book-list-item';card.innerHTML='<div class="book-list-title"></div>';card.querySelector('.book-list-title').textContent=r.course||'골프 기록';card.onclick=()=>showGolfDetail(r.id);box.appendChild(card)})}
 $('#golfSave').onclick=async()=>{const date=$('#golfDate').value,course=$('#golfCourse').value.trim(),partners=$('#golfPartners').value.trim();if(!date)return toast('날짜를 입력하세요.');if(!course)return toast('골프장을 입력하세요.');if(golfHoles.some(h=>!Number(h.par)))return toast('18홀의 PAR을 모두 입력하세요.');if(golfHoles.some(h=>golfFinal(h)<=0))return toast('18홀의 타수를 모두 기록하세요.');const totalPar=golfHoles.reduce((a,h)=>a+Number(h.par),0),totalScore=golfHoles.reduce((a,h)=>a+golfFinal(h),0),obj={date,course,partners,totalPar,totalScore,holes:golfHoles.map(h=>({par:Number(h.par),score:golfFinal(h),result:golfLabel(h)}))};if(editingGolfId){obj.id=editingGolfId;await storePut('golf',obj)}else await storeAdd('golf',obj);const edited=!!editingGolfId;editingGolfId=null;$('#golfSave').textContent='라운드 저장';await renderGolfHistory();toast(edited?'수정했습니다.':`라운드를 저장했습니다. ${totalScore}타 (${golfDiffText(totalScore-totalPar)})`);golfHoles=Array.from({length:18},()=>({par:0,strokes:0}));golfActiveHole=0;$('#golfCourse').value='';$('#golfPartners').value='';renderGolf()};
-async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'8.1',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
-async function restoreAllData(file){try{const text=await file.text(),data=JSON.parse(text);if(data.app!=='Min'||!Array.isArray(data.memo)||!Array.isArray(data.carlog))throw new Error('invalid');const books=Array.isArray(data.book)?data.book:[],trips=Array.isArray(data.travel)?data.travel:[],golf=Array.isArray(data.golf)?data.golf:[];if((await storeAll('memo')).length||(await storeAll('carlog')).length||(await storeAll('book')).length||(await storeAll('travel')).length||(await storeAll('golf')).length){if(!confirm('현재 데이터가 모두 지워지고 선택한 저장 파일로 복원됩니다. 계속하시겠습니까?'))return}await clearStore('memo');await clearStore('carlog');await clearStore('book');await clearStore('travel');await clearStore('golf');for(const r of data.memo){const x={...r};delete x.id;await storeAdd('memo',x)}for(const r of data.carlog){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('carlog',x)}for(const r of books){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('book',x)}for(const r of trips){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('travel',x)}for(const r of golf){const x={...r};delete x.id;await storeAdd('golf',x)}await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderGolfHistory()]);toast('전체 데이터를 복원했습니다.')}catch(e){console.error(e);toast('올바른 Min 저장 파일이 아닙니다.')}finally{$('#restoreFile').value=''}}
+
+// Diary
+function diaryEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let diaryCursor=new Date(),diarySelected=todayLocal(),diaryPhotoBlob=null,editingDiaryId=null,diaryDetailId=null;
+function diaryDate(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`}
+async function renderDiaryCalendar(){
+ const all=await storeAll('diary'),marked=new Set(all.map(x=>x.date));
+ const y=diaryCursor.getFullYear(),m=diaryCursor.getMonth(),first=new Date(y,m,1),start=new Date(y,m,1-first.getDay());
+ $('#diaryMonth').textContent=`${y}년 ${m+1}월`;const box=$('#diaryDays');box.innerHTML='';
+ for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const ds=diaryDate(d.getFullYear(),d.getMonth(),d.getDate());
+  const b=document.createElement('button');b.type='button';b.className='diary-day'+(d.getMonth()!==m?' other':'')+(ds===todayLocal()?' today':'')+(ds===diarySelected?' selected':'');
+  b.innerHTML=`<span>${d.getDate()}</span>${marked.has(ds)?'<i class="diary-dot"></i>':''}`;
+  b.onclick=()=>selectDiaryDate(ds);box.appendChild(b);
+ }
+ await renderDiaryList();
+}
+async function selectDiaryDate(ds){diarySelected=ds;const [y,m]=ds.split('-').map(Number);diaryCursor=new Date(y,m-1,1);await renderDiaryCalendar()}
+async function renderDiaryList(){
+ $('#diarySelectedTitle').textContent=diarySelected.replaceAll('-','. ');
+ const rows=(await storeAll('diary')).filter(x=>x.date===diarySelected).sort((a,b)=>(b.id||0)-(a.id||0));
+ const box=$('#diaryList');box.innerHTML='';
+ if(!rows.length){box.innerHTML='<div class="empty">이 날짜의 일기가 없습니다.</div>';return}
+ rows.forEach(r=>{const b=document.createElement('button');b.type='button';b.className='diary-item';b.innerHTML=`<div class="diary-item-title">${diaryEsc(r.title||'제목 없음')}</div><div class="diary-item-date">${diaryEsc(r.date||'')}</div>`;b.onclick=()=>showDiaryDetail(r.id);box.appendChild(b)})
+}
+function resetDiaryForm(){editingDiaryId=null;diaryPhotoBlob=null;$('#diaryForm').reset();$('#diaryPreview').removeAttribute('src');$('#diaryPreview').style.display='none';$('#diaryPhotoText').style.display='';$('#diaryFormTitle').textContent=`${diarySelected} 일기`;$('#diaryCancel').style.display='none'}
+function openDiaryForm(){resetDiaryForm();$('#diaryModal').classList.add('on')}
+$('#diaryAdd').onclick=openDiaryForm;$('#diaryClose').onclick=()=>$('#diaryModal').classList.remove('on');$('#diaryCancel').onclick=()=>{resetDiaryForm();$('#diaryModal').classList.remove('on')};
+$('#diaryPrev').onclick=()=>{diaryCursor=new Date(diaryCursor.getFullYear(),diaryCursor.getMonth()-1,1);renderDiaryCalendar()};
+$('#diaryNext').onclick=()=>{diaryCursor=new Date(diaryCursor.getFullYear(),diaryCursor.getMonth()+1,1);renderDiaryCalendar()};
+$('#diaryToday').onclick=()=>{diarySelected=todayLocal();diaryCursor=new Date();renderDiaryCalendar()};
+$('#diaryPhoto').onchange=async e=>{const f=e.target.files[0];if(!f)return;diaryPhotoBlob=await resizeImage(f);const u=URL.createObjectURL(diaryPhotoBlob);$('#diaryPreview').src=u;$('#diaryPreview').style.display='block';$('#diaryPhotoText').style.display='none'};
+$('#diaryForm').onsubmit=async e=>{e.preventDefault();const title=$('#diaryTitle').value.trim(),content=$('#diaryContent').value.trim();if(!title)return;
+ let photo=diaryPhotoBlob;if(editingDiaryId){const old=(await storeAll('diary')).find(x=>x.id===editingDiaryId);if(!photo&&old)photo=old.photo;await storePut('diary',{id:editingDiaryId,date:diarySelected,title,content,photo});toast('수정했습니다.')}else{await storeAdd('diary',{date:diarySelected,title,content,photo});toast('저장했습니다.')}
+ $('#diaryModal').classList.remove('on');resetDiaryForm();await renderDiaryCalendar()
+};
+async function showDiaryDetail(id){const r=(await storeAll('diary')).find(x=>x.id===id);if(!r)return;diaryDetailId=id;diarySelected=r.date;$('#diaryDetailTitle').textContent=r.title||'일기';$('#diaryDetailContent').textContent=r.content||'';const im=$('#diaryDetailImage');if(r.photo){im.src=URL.createObjectURL(r.photo);im.style.display='block';im.onclick=()=>openPhotoViewer(im.src)}else{im.removeAttribute('src');im.style.display='none'}$('#diaryDetailModal').classList.add('on')}
+$('#diaryDetailClose').onclick=()=>$('#diaryDetailModal').classList.remove('on');
+$('#diaryDetailEdit').onclick=async()=>{const r=(await storeAll('diary')).find(x=>x.id===diaryDetailId);if(!r)return;$('#diaryDetailModal').classList.remove('on');editingDiaryId=r.id;diarySelected=r.date;diaryPhotoBlob=r.photo||null;$('#diaryFormTitle').textContent=`${r.date} 일기 수정`;$('#diaryTitle').value=r.title||'';$('#diaryContent').value=r.content||'';if(r.photo){const u=URL.createObjectURL(r.photo);$('#diaryPreview').src=u;$('#diaryPreview').style.display='block';$('#diaryPhotoText').style.display='none'}else{$('#diaryPreview').style.display='none';$('#diaryPhotoText').style.display=''}$('#diaryCancel').style.display='block';$('#diaryModal').classList.add('on')};
+$('#diaryDetailDelete').onclick=async()=>{if(!diaryDetailId||!confirm('이 일기를 삭제하시겠습니까?'))return;await storeDelete('diary',diaryDetailId);diaryDetailId=null;$('#diaryDetailModal').classList.remove('on');await renderDiaryCalendar();toast('삭제했습니다.')};
+async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf'),diaries=await storeAll('diary');const carlog=[],book=[],travel=[],diary=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of diaries)diary.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'8.5',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf,diary};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
+async function restoreAllData(file){try{const text=await file.text(),data=JSON.parse(text);if(data.app!=='Min'||!Array.isArray(data.memo)||!Array.isArray(data.carlog))throw new Error('invalid');const books=Array.isArray(data.book)?data.book:[],trips=Array.isArray(data.travel)?data.travel:[],golf=Array.isArray(data.golf)?data.golf:[],diaries=Array.isArray(data.diary)?data.diary:[];if((await storeAll('memo')).length||(await storeAll('carlog')).length||(await storeAll('book')).length||(await storeAll('travel')).length||(await storeAll('golf')).length||(await storeAll('diary')).length){if(!confirm('현재 데이터가 모두 지워지고 선택한 저장 파일로 복원됩니다. 계속하시겠습니까?'))return}for(const n of ['memo','carlog','book','travel','golf','diary'])await clearStore(n);for(const r of data.memo){const x={...r};delete x.id;await storeAdd('memo',x)}for(const r of data.carlog){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('carlog',x)}for(const r of books){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('book',x)}for(const r of trips){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('travel',x)}for(const r of golf){const x={...r};delete x.id;await storeAdd('golf',x)}for(const r of diaries){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('diary',x)}await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderGolfHistory(),renderDiaryCalendar()]);toast('전체 데이터를 복원했습니다.')}catch(e){console.error(e);toast('올바른 Min 저장 파일이 아닙니다.')}finally{$('#restoreFile').value=''}}
 $('#exportAll').onclick=exportAllData;$('#importAll').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=e=>{const f=e.target.files[0];if(f)restoreAllData(f)};
 function openPhotoViewer(src){if(!src)return;const v=$('#photoViewer'),im=$('#photoViewerImage');im.src=src;v.classList.add('open');v.setAttribute('aria-hidden','false');document.body.classList.add('photo-viewer-open');v.scrollTop=0}
 function closePhotoViewer(){const v=$('#photoViewer');v.classList.remove('open');v.setAttribute('aria-hidden','true');document.body.classList.remove('photo-viewer-open');$('#photoViewerImage').removeAttribute('src')}
 $('#photoViewerClose').onclick=closePhotoViewer;
 $('#photoViewer').onclick=e=>{if(e.target===$('#photoViewer'))closePhotoViewer()};
 document.addEventListener('click',e=>{const im=e.target.closest&&e.target.closest('.record-img');if(im&&im.src&&!e.target.closest('#photoViewer'))openPhotoViewer(im.src)});
-(async()=>{try{await openDB();await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap()]);await initTravelMap();showView('homeView')}catch(e){alert('이 브라우저에서는 저장소를 사용할 수 없습니다.')}})();
+(async()=>{try{await openDB();await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderDiaryCalendar()]);await initTravelMap();showView('homeView')}catch(e){alert('이 브라우저에서는 저장소를 사용할 수 없습니다.')}})();
 </script>
 <script id="app-version-config">
-const APP_VERSION = '8.1';
+const APP_VERSION = '8.5';
 document.addEventListener('DOMContentLoaded',()=>{
   const el=document.getElementById('appVersion');
   if(el) el.textContent='v.'+APP_VERSION;
   document.title="Min's Note "+'v.'+APP_VERSION;
 });
 
+
+
+// Modal navigation helpers: forms/editors are real UI levels for Android/Chrome Back.
+function minModalIsOpen(id){return !!document.querySelector(id)?.classList.contains('on')}
+function minOpenModal(id,returnEntry){
+ const el=document.querySelector(id); if(!el)return;
+ el.classList.add('on');
+ if(!minNavApplying)minNavPush({kind:'modal',modal:id,returnEntry:returnEntry||minNavStack[minNavStack.length-1]||{kind:'home'}});
+}
 
 // Mobile Back navigation v2: explicit UI stack. Never rewinds form values or golf scores.
 let minNavApplying=false;
@@ -921,6 +999,8 @@ function minNavPush(entry){
 function minNavCloseLayers(){
  closePhotoViewer();
  $('#memoModal')?.classList.remove('on');
+ $('#diaryModal')?.classList.remove('on');
+ $('#diaryDetailModal')?.classList.remove('on');
  $('#detailModal')?.classList.remove('on');
  $('#carDetailModal')?.classList.remove('on');
  $('#bookDetailModal')?.classList.remove('on');
@@ -941,12 +1021,19 @@ async function minNavRender(entry){
    if(entry.view==='travelView'&&$('#travelDetail')){
     $('#travelDetail').style.display='none';$('#travelAreaCards').style.display='grid';currentTravelArea=null;
    }
+  }else if(entry.kind==='modal'){
+   const back=entry.returnEntry||{kind:'home'};
+   await minNavRender(back);
+   minNavApplying=true;
+   document.querySelector(entry.modal)?.classList.add('on');
   }else if(entry.kind==='travelArea'){
    showView('travelView'); await openTravelArea(entry.area);
   }else if(entry.kind==='memoDetail'){
    showView('memoView');
    const r=(await storeAll('memo')).find(x=>x.id===entry.id);
    if(r)showDetail(r);
+  }else if(entry.kind==='diaryDetail'){
+   showView('diaryView'); await showDiaryDetail(entry.id);
   }else if(entry.kind==='carDetail'){
    showView('carView'); await showCarDetail(entry.id);
   }else if(entry.kind==='bookDetail'){
@@ -994,6 +1081,8 @@ showDetail=function(r){
  _minShowDetail(r);
  if(!minNavApplying && r?.id)minNavPush({kind:'memoDetail',id:r.id});
 };
+const _minShowDiaryDetail=showDiaryDetail;
+showDiaryDetail=async function(id){await _minShowDiaryDetail(id);if(!minNavApplying&&id)minNavPush({kind:'diaryDetail',id});};
 const _minShowCarDetail=showCarDetail;
 showCarDetail=async function(id){
  await _minShowCarDetail(id);
@@ -1027,10 +1116,40 @@ showTravelDetail=async function(id){
  if(!minNavApplying)minNavPush({kind:'travelDetail',area:currentTravelArea,region:currentRegion,name:travelDisplayName,id});
 };
 
+
+// Form/editor modal history. Legacy form logic runs first; this listener only records the opened layer.
+[
+ ['#memoAdd','#memoModal'],['#diaryAdd','#diaryModal'],['#carAdd','#carModal'],
+ ['#bookAdd','#bookModal'],['#travelAdd','#travelModal']
+].forEach(([trigger,modal])=>{
+ const b=$(trigger),m=$(modal); if(!b||!m)return;
+ b.addEventListener('click',()=>{if(!minNavApplying && m.classList.contains('on'))minNavPush({kind:'modal',modal,returnEntry:minNavStack[minNavStack.length-1]})});
+});
+[
+ ['#diaryDetailEdit','#diaryModal'],['#carDetailEdit','#carModal'],
+ ['#bookDetailEdit','#bookModal'],['#travelDetailEdit','#travelModal']
+].forEach(([trigger,modal])=>{
+ const b=$(trigger),m=$(modal); if(!b||!m)return;
+ b.addEventListener('click',()=>{if(!minNavApplying && m.classList.contains('on'))minNavPush({kind:'modal',modal,returnEntry:minNavStack[minNavStack.length-1]})});
+});
+
+// Form close/cancel: close only the current form layer, never jump to Home.
+[
+ '#memoClose','#memoCancel','#diaryClose','#diaryCancel',
+ '#carClose','#carCancel','#bookClose','#bookCancel','#travelClose','#travelCancel'
+].forEach(sel=>{
+ const b=$(sel);if(!b)return;
+ b.addEventListener('click',e=>{
+  if(minNavApplying)return;
+  const top=minNavStack[minNavStack.length-1];
+  if(top?.kind==='modal'){e.preventDefault();e.stopImmediatePropagation();minNavBack()}
+ },true);
+});
+
 // Internal back/close controls follow the same stack as Android/Chrome Back.
 [
- '#detailClose','#carDetailClose','#bookDetailClose','#travelDetailClose',
- '#travelClose','#golfDetailClose','#travelAreaBack'
+ '#detailClose','#diaryDetailClose','#carDetailClose','#bookDetailClose','#travelDetailClose',
+ '#golfDetailClose','#travelAreaBack'
 ].forEach(sel=>{
  const b=$(sel); if(!b)return;
  b.addEventListener('click',e=>{
@@ -1051,12 +1170,4 @@ document.querySelectorAll('.view .back-home').forEach(b=>{
 });
 </script>
 
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(console.error);
-  });
-}
-</script>
 </body></html>
