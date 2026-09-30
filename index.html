@@ -493,7 +493,7 @@ body.photo-viewer-open{overflow:hidden!important}
 #bookForm.editing .save{font-weight:700}
 #travelDetailModal{z-index:80}#travelDetailModal .sheet{position:relative;z-index:81}</style>
 <meta name="theme-color" content="#090a0c">
-<!-- Min 7.6 PWA support -->
+<!-- Min 7.7 PWA support -->
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -947,7 +947,7 @@ $('#golfDetailEdit').onclick=async()=>{const r=(await storeAll('golf')).find(x=>
 $('#golfDetailDelete').onclick=async()=>{if(golfDetailId&&confirm('이 라운드 기록을 삭제하시겠습니까?')){await storeDelete('golf',golfDetailId);closeGolfDetail();renderGolfHistory();toast('삭제했습니다.')}};
 async function renderGolfHistory(){const arr=(await storeAll('golf')).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);$('#golfCount').textContent=arr.length+'건';const box=$('#golfHistory');box.innerHTML='';if(!arr.length){box.innerHTML='<div class="empty">아직 저장된 라운드가 없습니다.</div>';return}arr.forEach(r=>{const card=document.createElement('article');card.className='book-list-item';card.innerHTML='<div class="book-list-title"></div>';card.querySelector('.book-list-title').textContent=r.course||'골프 기록';card.onclick=()=>showGolfDetail(r.id);box.appendChild(card)})}
 $('#golfSave').onclick=async()=>{const date=$('#golfDate').value,course=$('#golfCourse').value.trim(),partners=$('#golfPartners').value.trim();if(!date)return toast('날짜를 입력하세요.');if(!course)return toast('골프장을 입력하세요.');if(golfHoles.some(h=>!Number(h.par)))return toast('18홀의 PAR을 모두 입력하세요.');if(golfHoles.some(h=>golfFinal(h)<=0))return toast('18홀의 타수를 모두 기록하세요.');const totalPar=golfHoles.reduce((a,h)=>a+Number(h.par),0),totalScore=golfHoles.reduce((a,h)=>a+golfFinal(h),0),obj={date,course,partners,totalPar,totalScore,holes:golfHoles.map(h=>({par:Number(h.par),score:golfFinal(h),result:golfLabel(h)}))};if(editingGolfId){obj.id=editingGolfId;await storePut('golf',obj)}else await storeAdd('golf',obj);const edited=!!editingGolfId;editingGolfId=null;$('#golfSave').textContent='라운드 저장';await renderGolfHistory();toast(edited?'수정했습니다.':`라운드를 저장했습니다. ${totalScore}타 (${golfDiffText(totalScore-totalPar)})`);golfHoles=Array.from({length:18},()=>({par:0,strokes:0}));golfActiveHole=0;$('#golfCourse').value='';$('#golfPartners').value='';renderGolf()};
-async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'7.6',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
+async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'7.7',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
 async function restoreAllData(file){try{const text=await file.text(),data=JSON.parse(text);if(data.app!=='Min'||!Array.isArray(data.memo)||!Array.isArray(data.carlog))throw new Error('invalid');const books=Array.isArray(data.book)?data.book:[],trips=Array.isArray(data.travel)?data.travel:[],golf=Array.isArray(data.golf)?data.golf:[];if((await storeAll('memo')).length||(await storeAll('carlog')).length||(await storeAll('book')).length||(await storeAll('travel')).length||(await storeAll('golf')).length){if(!confirm('현재 데이터가 모두 지워지고 선택한 저장 파일로 복원됩니다. 계속하시겠습니까?'))return}await clearStore('memo');await clearStore('carlog');await clearStore('book');await clearStore('travel');await clearStore('golf');for(const r of data.memo){const x={...r};delete x.id;await storeAdd('memo',x)}for(const r of data.carlog){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('carlog',x)}for(const r of books){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('book',x)}for(const r of trips){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('travel',x)}for(const r of golf){const x={...r};delete x.id;await storeAdd('golf',x)}await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderGolfHistory()]);toast('전체 데이터를 복원했습니다.')}catch(e){console.error(e);toast('올바른 Min 저장 파일이 아닙니다.')}finally{$('#restoreFile').value=''}}
 $('#exportAll').onclick=exportAllData;$('#importAll').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=e=>{const f=e.target.files[0];if(f)restoreAllData(f)};
 function openPhotoViewer(src){if(!src)return;const v=$('#photoViewer'),im=$('#photoViewerImage');im.src=src;v.classList.add('open');v.setAttribute('aria-hidden','false');document.body.classList.add('photo-viewer-open');v.scrollTop=0}
@@ -958,17 +958,145 @@ document.addEventListener('click',e=>{const im=e.target.closest&&e.target.closes
 (async()=>{try{await openDB();await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap()]);await initTravelMap();showView('homeView')}catch(e){alert('이 브라우저에서는 저장소를 사용할 수 없습니다.')}})();
 </script>
 <script id="app-version-config">
-const APP_VERSION = '7.6';
+const APP_VERSION = '7.7';
 document.addEventListener('DOMContentLoaded',()=>{
   const el=document.getElementById('appVersion');
   if(el) el.textContent='v.'+APP_VERSION;
   document.title="Min's Note "+'v.'+APP_VERSION;
 });
+
+// Mobile browser Back navigation: UI layers only. Data values are never undone.
+let minNavApplying=false;
+function minNavState(kind,extra={}){return Object.assign({minNote:true,kind},extra)}
+function minNavPush(kind,extra={}){
+ if(minNavApplying)return;
+ history.pushState(minNavState(kind,extra),'');
+}
+function minNavCloseLayers(){
+ closePhotoViewer();
+ $('#memoModal')?.classList.remove('on');
+ $('#detailModal')?.classList.remove('on');
+ $('#carDetailModal')?.classList.remove('on');
+ $('#bookDetailModal')?.classList.remove('on');
+ $('#travelDetailModal')?.classList.remove('on');
+ $('#travelModal')?.classList.remove('on');
+ $('#golfDetailModal')?.classList.remove('on');
+}
+function minNavCurrentView(){
+ const v=document.querySelector('.view.on'); return v?v.id:'homeView';
+}
+function minNavApply(st){
+ minNavApplying=true;
+ minNavCloseLayers();
+ if(!st||!st.minNote||st.kind==='home'){
+   showView('homeView');
+   if($('#travelDetail')){$('#travelDetail').style.display='none';$('#travelAreaCards').style.display='grid'}
+   currentTravelArea=null;
+ }else if(st.kind==='view'){
+   showView(st.view||'homeView');
+ }else if(st.kind==='travelArea'){
+   showView('travelView');
+   openTravelArea(st.area);
+ }else if(st.kind==='memoDetail'){
+   showView('memoView'); showDetail(st.record);
+ }else if(st.kind==='carDetail'){
+   showView('carView'); showCarDetail(st.id);
+ }else if(st.kind==='bookDetail'){
+   showView('bookView'); showBookDetail(st.id);
+ }else if(st.kind==='travelRecord'){
+   showView('travelView'); openTravelArea(st.area).then(()=>openTravel(st.region,st.name));
+ }else if(st.kind==='travelDetail'){
+   showView('travelView'); openTravelArea(st.area).then(()=>openTravel(st.region,st.name).then(()=>showTravelDetail(st.id)));
+ }else if(st.kind==='golfDetail'){
+   showView('golfView'); showGolfDetail(st.id);
+ }
+ setTimeout(()=>{minNavApplying=false},0);
+}
+history.replaceState(minNavState('home'),'');
+window.addEventListener('popstate',e=>minNavApply(e.state));
+
+// Main menu -> browser history entry.
+document.querySelectorAll('[data-open]').forEach(b=>{
+ b.addEventListener('click',()=>minNavPush('view',{view:b.dataset.open}));
+});
+
+// Travel province/city hierarchy.
+document.querySelectorAll('.province-card').forEach(b=>{
+ b.addEventListener('click',()=>minNavPush('travelArea',{area:b.dataset.area}));
+});
+const minTravelBack=$('#travelAreaBack');
+if(minTravelBack)minTravelBack.addEventListener('click',e=>{
+ if(!minNavApplying){e.preventDefault();e.stopImmediatePropagation();history.back()}
+},true);
+
+// Dynamic record/detail openings: capture the state after the existing click target is known.
+document.addEventListener('click',e=>{
+ if(minNavApplying)return;
+ const item=e.target.closest('.book-list-item,.memo-card');
+ if(!item)return;
+ setTimeout(()=>{
+   if($('#carDetailModal')?.classList.contains('on') && carDetailId) minNavPush('carDetail',{id:carDetailId});
+   else if($('#bookDetailModal')?.classList.contains('on') && bookDetailId) minNavPush('bookDetail',{id:bookDetailId});
+   else if($('#golfDetailModal')?.classList.contains('on') && golfDetailId) minNavPush('golfDetail',{id:golfDetailId});
+ },0);
+});
+
+// Memo detail button is inside a card, so record the opened detail explicitly.
+document.addEventListener('click',e=>{
+ if(minNavApplying)return;
+ if(e.target?.textContent==='상세' && e.target.closest('.memo-card')){
+   setTimeout(async()=>{
+     if($('#detailModal')?.classList.contains('on') && memoDetailId){
+       const r=(await storeAll('memo')).find(x=>x.id===memoDetailId);
+       if(r)minNavPush('memoDetail',{record:r});
+     }
+   },0);
+ }
+});
+
+// Travel modal/detail state is captured from the actual selected region.
+const _minOpenTravel=openTravel;
+openTravel=async function(region,displayName=legacyRegionName(region)){
+ await _minOpenTravel(region,displayName);
+ if(!minNavApplying)minNavPush('travelRecord',{area:currentTravelArea,region,name:displayName});
+};
+const _minShowTravelDetail=showTravelDetail;
+showTravelDetail=async function(id){
+ await _minShowTravelDetail(id);
+ if(!minNavApplying)minNavPush('travelDetail',{area:currentTravelArea,region:currentRegion,name:travelDisplayName,id});
+};
+
+// Close/X buttons use browser Back when the layer came from app navigation.
+[
+ ['#detailClose','#detailModal'],['#carDetailClose','#carDetailModal'],
+ ['#bookDetailClose','#bookDetailModal'],['#travelDetailClose','#travelDetailModal'],
+ ['#travelClose','#travelModal'],['#golfDetailClose','#golfDetailModal']
+].forEach(([btn,modal])=>{
+ const b=$(btn);
+ if(b)b.addEventListener('click',e=>{
+   if(!minNavApplying && $(modal)?.classList.contains('on')){
+     e.preventDefault();e.stopImmediatePropagation();history.back();
+   }
+ },true);
+});
+
+// Home/back buttons inside feature views use browser Back instead of exiting the HTML.
+document.querySelectorAll('.view .back-home').forEach(b=>{
+ if(b.id==='travelAreaBack')return;
+ b.addEventListener('click',e=>{
+   if(!minNavApplying && minNavCurrentView()!=='homeView'){
+     e.preventDefault();e.stopImmediatePropagation();history.back();
+   }
+ },true);
+});
 </script>
 
 <script>
 if ('serviceWorker' in navigator) {
- window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(err => console.error('Service Worker registration failed:', err)); });
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .catch(err => console.error('Service Worker registration failed:', err));
+  });
 }
 </script>
 </body></html>
