@@ -484,7 +484,7 @@ body.photo-viewer-open{overflow:hidden!important}
 </style>
 <meta name="theme-color" content="#090a0c">
 
-<!-- Min 6.2 PWA support -->
+<!-- Min 6.3 PWA support -->
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -529,7 +529,7 @@ body.photo-viewer-open{overflow:hidden!important}
     <div class="field"><label class="label" for="golfCourse">골프장</label><input class="input" id="golfCourse" maxlength="60" placeholder="골프장 이름"></div>
     <div class="field"><label class="label" for="golfPartners">동반자</label><input class="input" id="golfPartners" maxlength="100" placeholder="동반자 이름"></div>
   </section>
-  <div class="golf-summary"><div><span>PAR</span><b id="golfTotalPar">0</b></div><div><span>현재 타수</span><b id="golfTotalScore">0</b></div><div><span>PAR 대비</span><b id="golfTotalDiff">E</b></div></div>
+  <div class="golf-summary"><div><span>PAR</span><b id="golfTotalPar">0</b></div><div><span>현재 타수</span><b id="golfTotalScore">0</b></div><div><span>PAR 대비</span><b id="golfTotalDiff">0</b></div></div>
   <div id="golfHoles" class="golf-holes"></div>
   <section class="golf-control">
     <div id="golfActiveTitle" class="golf-active-title">1 HOLE · PAR - · 0타</div>
@@ -720,7 +720,7 @@ function renderGolfSummary(){
  const playedPar=scored.reduce((a,h)=>a+Number(h.par),0);
  $('#golfTotalPar').textContent=par;
  $('#golfTotalScore').textContent=score;
- $('#golfTotalDiff').textContent=scored.length?golfDiffText(score-playedPar):'E';
+ $('#golfTotalDiff').textContent=scored.length?golfCardDiff({par:playedPar,strokes:score,penalty:0,onion:false}):'0';
 }
 function renderGolfControl(){
  const h=golfHoles[golfActiveHole]; if(!h)return;
@@ -779,7 +779,7 @@ $('#golfSave').onclick=async()=>{
  golfHoles=Array.from({length:18},()=>({par:0,strokes:0,ob:0,hazard:0,onion:false,actions:[]}));golfActiveHole=0;$('#golfCourse').value='';$('#golfPartners').value='';renderGolf();
 };
 
-async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'6.2',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
+async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf');const carlog=[],book=[],travel=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'6.3',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
 async function restoreAllData(file){try{const text=await file.text(),data=JSON.parse(text);if(data.app!=='Min'||!Array.isArray(data.memo)||!Array.isArray(data.carlog))throw new Error('invalid');const books=Array.isArray(data.book)?data.book:[],trips=Array.isArray(data.travel)?data.travel:[],golf=Array.isArray(data.golf)?data.golf:[];if((await storeAll('memo')).length||(await storeAll('carlog')).length||(await storeAll('book')).length||(await storeAll('travel')).length||(await storeAll('golf')).length){if(!confirm('현재 데이터가 모두 지워지고 선택한 저장 파일로 복원됩니다. 계속하시겠습니까?'))return}await clearStore('memo');await clearStore('carlog');await clearStore('book');await clearStore('travel');await clearStore('golf');for(const r of data.memo){const x={...r};delete x.id;await storeAdd('memo',x)}for(const r of data.carlog){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('carlog',x)}for(const r of books){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('book',x)}for(const r of trips){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('travel',x)}for(const r of golf){const x={...r};delete x.id;await storeAdd('golf',x)}await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderGolfHistory()]);toast('전체 데이터를 복원했습니다.')}catch(e){console.error(e);toast('올바른 Min 저장 파일이 아닙니다.')}finally{$('#restoreFile').value=''}}
 $('#exportAll').onclick=exportAllData;$('#importAll').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=e=>{const f=e.target.files[0];if(f)restoreAllData(f)};
 function openPhotoViewer(src){if(!src)return;const v=$('#photoViewer'),im=$('#photoViewerImage');im.src=src;v.classList.add('open');v.setAttribute('aria-hidden','false');document.body.classList.add('photo-viewer-open');v.scrollTop=0}
@@ -790,7 +790,7 @@ document.addEventListener('click',e=>{const im=e.target.closest&&e.target.closes
 (async()=>{try{await openDB();await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap()]);await initTravelMap();showView('homeView')}catch(e){alert('이 브라우저에서는 저장소를 사용할 수 없습니다.')}})();
 </script>
 <script id="app-version-config">
-const APP_VERSION = '6.2';
+const APP_VERSION = '6.3';
 document.addEventListener('DOMContentLoaded',()=>{
   const el=document.getElementById('appVersion');
   if(el) el.textContent='v.'+APP_VERSION;
