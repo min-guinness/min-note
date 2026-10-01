@@ -450,6 +450,26 @@ body.photo-viewer-open{overflow:hidden!important}
 .diary-item-title{font-weight:700}.diary-item-date{font-size:11px;color:#777;margin-top:4px}
 .diary-detail-image{display:none;width:100%;max-height:48vh;object-fit:contain;background:#f3f3f1;border:1px solid #dededb;border-radius:12px;margin-bottom:14px;cursor:zoom-in}
 
+
+/* Unified centered popup windows */
+.modal{align-items:center!important;justify-content:center!important;padding:18px!important}
+.modal .sheet{
+ width:min(100%,680px)!important;
+ max-width:680px!important;
+ max-height:calc(100dvh - 36px)!important;
+ margin:auto!important;
+ border-radius:18px!important;
+ overflow:auto!important;
+}
+@media(max-width:560px){
+ .modal{padding:14px!important}
+ .modal .sheet{
+  width:100%!important;
+  max-width:none!important;
+  max-height:calc(100dvh - 28px)!important;
+  border-radius:16px!important;
+ }
+}
 </style>
 <meta name="theme-color" content="#090a0c">
 </head>
@@ -957,7 +977,7 @@ async function showDiaryDetail(id){const r=(await storeAll('diary')).find(x=>x.i
 $('#diaryDetailClose').onclick=()=>$('#diaryDetailModal').classList.remove('on');
 $('#diaryDetailEdit').onclick=async()=>{const r=(await storeAll('diary')).find(x=>x.id===diaryDetailId);if(!r)return;$('#diaryDetailModal').classList.remove('on');editingDiaryId=r.id;diarySelected=r.date;diaryPhotoBlob=r.photo||null;$('#diaryFormTitle').textContent=`${r.date} 일기 수정`;$('#diaryTitle').value=r.title||'';$('#diaryContent').value=r.content||'';if(r.photo){const u=URL.createObjectURL(r.photo);$('#diaryPreview').src=u;$('#diaryPreview').style.display='block';$('#diaryPhotoText').style.display='none'}else{$('#diaryPreview').style.display='none';$('#diaryPhotoText').style.display=''}$('#diaryCancel').style.display='block';$('#diaryModal').classList.add('on')};
 $('#diaryDetailDelete').onclick=async()=>{if(!diaryDetailId||!confirm('이 일기를 삭제하시겠습니까?'))return;await storeDelete('diary',diaryDetailId);diaryDetailId=null;$('#diaryDetailModal').classList.remove('on');await renderDiaryCalendar();toast('삭제했습니다.')};
-async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf'),diaries=await storeAll('diary');const carlog=[],book=[],travel=[],diary=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of diaries)diary.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'8.7',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf,diary};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
+async function exportAllData(){try{const memos=await storeAll('memo'),cars=await storeAll('carlog'),books=await storeAll('book'),trips=await storeAll('travel'),golf=await storeAll('golf'),diaries=await storeAll('diary');const carlog=[],book=[],travel=[],diary=[];for(const r of cars)carlog.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of books)book.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of trips)travel.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});for(const r of diaries)diary.push({...r,photo:r.photo?await blobToDataURL(r.photo):null});const payload={app:'Min',version:'8.8',savedAt:new Date().toISOString(),memo:memos,carlog,book,travel,golf,diary};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Min_${stamp()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('전체 데이터를 저장했습니다.')}catch(e){console.error(e);toast('저장 파일을 만들지 못했습니다.')}}
 async function restoreAllData(file){try{const text=await file.text(),data=JSON.parse(text);if(data.app!=='Min'||!Array.isArray(data.memo)||!Array.isArray(data.carlog))throw new Error('invalid');const books=Array.isArray(data.book)?data.book:[],trips=Array.isArray(data.travel)?data.travel:[],golf=Array.isArray(data.golf)?data.golf:[],diaries=Array.isArray(data.diary)?data.diary:[];if((await storeAll('memo')).length||(await storeAll('carlog')).length||(await storeAll('book')).length||(await storeAll('travel')).length||(await storeAll('golf')).length||(await storeAll('diary')).length){if(!confirm('현재 데이터가 모두 지워지고 선택한 저장 파일로 복원됩니다. 계속하시겠습니까?'))return}for(const n of ['memo','carlog','book','travel','golf','diary'])await clearStore(n);for(const r of data.memo){const x={...r};delete x.id;await storeAdd('memo',x)}for(const r of data.carlog){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('carlog',x)}for(const r of books){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('book',x)}for(const r of trips){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('travel',x)}for(const r of golf){const x={...r};delete x.id;await storeAdd('golf',x)}for(const r of diaries){const x={...r,photo:dataURLToBlob(r.photo)};delete x.id;await storeAdd('diary',x)}await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderGolfHistory(),renderDiaryCalendar()]);toast('전체 데이터를 복원했습니다.')}catch(e){console.error(e);toast('올바른 Min 저장 파일이 아닙니다.')}finally{$('#restoreFile').value=''}}
 $('#exportAll').onclick=exportAllData;$('#importAll').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=e=>{const f=e.target.files[0];if(f)restoreAllData(f)};
 function openPhotoViewer(src){if(!src)return;const v=$('#photoViewer'),im=$('#photoViewerImage');im.src=src;v.classList.add('open');v.setAttribute('aria-hidden','false');document.body.classList.add('photo-viewer-open');v.scrollTop=0}
@@ -968,7 +988,7 @@ document.addEventListener('click',e=>{const im=e.target.closest&&e.target.closes
 (async()=>{try{await openDB();await Promise.all([renderMemo(),renderCar(),renderBook(),renderTravelMap(),renderDiaryCalendar()]);await initTravelMap();showView('homeView')}catch(e){alert('이 브라우저에서는 저장소를 사용할 수 없습니다.')}})();
 </script>
 <script id="app-version-config">
-const APP_VERSION = '8.7';
+const APP_VERSION = '8.8';
 document.addEventListener('DOMContentLoaded',()=>{
   const el=document.getElementById('appVersion');
   if(el) el.textContent='v.'+APP_VERSION;
